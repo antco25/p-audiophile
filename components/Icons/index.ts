@@ -1,0 +1,7 @@
+export { default as Logo } from './Logo'
+export { default as Hamburger } from './Hamburger'
+export { default as Cart } from './Cart'
+export { default as ArrowRight } from './ArrowRight'
+export { default as Facebook } from './Facebook'
+export { default as Instagram } from './Instagram'
+export { default as Twitter } from './Twitter'

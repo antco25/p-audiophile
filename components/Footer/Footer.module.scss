@@ -1,0 +1,11 @@
+.socials a {
+    @apply inline-block;
+}
+
+.socialLink {
+    @apply inline-block;
+
+    &:hover path {
+        @apply fill-orange-500;
+    }
+}

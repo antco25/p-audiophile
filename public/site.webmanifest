@@ -1,0 +1,17 @@
+{
+    "name": "Audiophile E-Commerce",
+    "short_name": "Audiophile",
+    "description": "Audiophile E-Commerce Store",
+    "display": "standalone",
+    "start_url": "/",
+    "theme_color": "#fff",
+    "background_color": "#000000",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "/icon-32x32.png",
+        "type": "image/png",
+        "sizes": "32x132"
+      }
+    ]
+  }
