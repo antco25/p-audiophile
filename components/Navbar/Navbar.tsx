@@ -5,9 +5,13 @@ import { Cart, Logo } from '../Icons';
 
 const categories = ['headphones', 'speakers', 'earphones'];
 
-const Navbar = () => {
+interface NavbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  background: boolean
+}
+
+const Navbar = ({ background } : NavbarProps) => {
   return (
-    <div className='Navbar bg-black text-white'>
+    <div className={`Navbar text-white${background ? ' bg-black' : ''}`}>
       <div className={`${common.appWrap} flex justify-center items-center pt-8 pb-9`}>
         <Logo className='flex-1'/>
         <nav className='flex justify-center absolute'>
