@@ -5,4 +5,12 @@
 .navLink {
     @apply uppercase font-bold text-sm hover:text-orange-500;
 }
+
+.newProductText {
+    @apply text-sm uppercase tracking-[.625rem]
+}
+
+.buttonLinkOne {
+    @apply uppercase font-bold bg-orange-400 hover:bg-orange-300 py-4 px-7 text-sm
+}
   

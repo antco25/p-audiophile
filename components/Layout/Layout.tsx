@@ -15,7 +15,7 @@ const Layout: React.FC<Props> = ({ children }) => {
                 <link rel="icon" href="/favicon-32x32.png" />
             </Head>
             <header>
-                <Navbar background={false} />
+                <Navbar background={true} />
             </header>
             <main>
                 {children}

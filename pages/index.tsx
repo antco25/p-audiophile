@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryCard, HeroBanner, ZX7BannerCard, ZX9BannerCard } from '../components';
+import { CategoryCard, HomeHeroBanner, ZX7BannerCard, ZX9BannerCard } from '../components';
 import common from '../components/common.module.scss';
 
 //TODO: Get from db
@@ -11,7 +11,7 @@ import { InfoBannerCard, YX1BannerCard } from '../components/BannerCard';
 const Home = () => {
   return (
     <div className={common.appWrap}>
-      <HeroBanner />
+      <HomeHeroBanner />
       <div className='flex gap-x-8 h-72 mt-28'>
         <CategoryCard category='headphones' thumbnail={tbHeadphones} className='flex-1' />
         <CategoryCard category='speakers' thumbnail={tbSpeakers} className='flex-1' />
