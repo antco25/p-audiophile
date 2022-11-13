@@ -25,7 +25,7 @@ const ProductCategoryCard = ({ data, category, reverse, ...props }: ProductCateg
                     {data.newProduct ? <p className={`${commonStyles.newProductText} text-orange-400 mb-4 `}>New Product</p> : null}
                     <h1 className='uppercase font-bold text-4xl mb-8'>{data.name}<br />{category}</h1>
                     <p className='mb-10 opacity-50 font-medium'>{data.description}</p>
-                    <Link href='/' className={`${commonStyles.buttonLinkOne} inline-block text-white`} >See Product</Link>
+                    <Link href='/products/xx99' className={`${commonStyles.buttonLinkOne} inline-block text-white`} >See Product</Link>
                 </div>
             </div>
 

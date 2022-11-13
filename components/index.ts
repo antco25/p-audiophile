@@ -5,3 +5,5 @@ export { default as CategoryCard } from './CategoryCard';
 export { InfoBannerCard, ZX7BannerCard, ZX9BannerCard } from './BannerCard';
 export { default as HomeHeroBanner } from './HomeHeroBanner';
 export { default as ProductCategoryCard } from './ProductCategoryCard';
+export { default as QuantityCounter } from './QuantityCounter';
+export { default as RecommendCard } from './RecommendCard';
