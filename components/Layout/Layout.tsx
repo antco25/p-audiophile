@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import CartModal from '../CartModal'
 import Footer from '../Footer'
 import Navbar from '../Navbar/Navbar'
 
@@ -16,6 +17,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             </Head>
             <header>
                 <Navbar background={true} />
+                <CartModal />
             </header>
             <main>
                 {children}
