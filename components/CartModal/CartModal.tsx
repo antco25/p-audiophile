@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image';
 import commonStyles from '../common.module.scss';
 
 //Get from db
@@ -7,7 +8,6 @@ import tbXX99 from '../../public/assets/shared/desktop/image-xx99-mark-two-headp
 import tbXX59 from '../../public/assets/shared/desktop/image-xx59-headphones.jpg'
 import tbZX9 from '../../public/assets/shared/desktop/image-zx9-speaker.jpg'
 import QuantityCounter from '../QuantityCounter';
-import Image from 'next/image';
 
 let cartData = [
   {

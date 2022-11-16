@@ -8,6 +8,9 @@ interface Props {
     children?: React.ReactNode
 }
 
+//TODO: state
+const cartOpen = false;
+
 const Layout: React.FC<Props> = ({ children }) => {
     return (
         <div className='Layout'>
@@ -17,7 +20,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             </Head>
             <header>
                 <Navbar background={true} />
-                <CartModal />
+                {cartOpen && <CartModal />}
             </header>
             <main>
                 {children}

@@ -1,0 +1,23 @@
+.subHeader {
+    @apply uppercase font-bold text-orange-500 mb-4;
+}
+
+.label {
+    @apply font-bold text-xs mb-[9px];
+}
+
+.inputWrapRadio {
+    @apply flex items-center relative;
+
+    &:hover .labelRadio {
+        @apply border-orange-500;
+    }
+}
+
+.labelRadio {
+    @apply font-bold text-sm inline-block flex-1 pl-14 pr-6 py-4 border rounded-lg;
+}
+
+.input {
+    @apply px-6 py-4 border rounded-lg text-sm font-bold hover:border-orange-500 focus:border-orange-500 outline-none;
+}
