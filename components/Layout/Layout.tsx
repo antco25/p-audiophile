@@ -1,11 +1,15 @@
 import Head from 'next/head'
 import React from 'react'
+import CartModal from '../CartModal'
 import Footer from '../Footer'
 import Navbar from '../Navbar/Navbar'
 
 interface Props {
     children?: React.ReactNode
 }
+
+//TODO: state
+const cartOpen = false;
 
 const Layout: React.FC<Props> = ({ children }) => {
     return (
@@ -16,6 +20,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             </Head>
             <header>
                 <Navbar background={true} />
+                {cartOpen && <CartModal />}
             </header>
             <main>
                 {children}
