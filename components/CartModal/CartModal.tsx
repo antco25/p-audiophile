@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image';
 import commonStyles from '../common.module.scss';
 
-//Get from db
+//TODO: Get from db
 import tbXX99 from '../../public/assets/shared/desktop/image-xx99-mark-two-headphones.jpg'
 import tbXX59 from '../../public/assets/shared/desktop/image-xx59-headphones.jpg'
 import tbZX9 from '../../public/assets/shared/desktop/image-zx9-speaker.jpg'

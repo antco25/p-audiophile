@@ -2,12 +2,12 @@ import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { PatternCircles } from '../Icons';
-import { getRichText } from '../../lib/utils';
+import { getRichText } from '../../lib';
 import BannerProps from './BannerProps';
+
 
 //TODO: Fix the highlighting of the text, z-index
 const ZX9BannerCard = ({ data, ...props }: BannerProps) => {
-
   const header = getRichText(data.header);
   const description = getRichText(data.description);
 

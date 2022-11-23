@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
-import { getRichText } from '../../lib/utils';
+import { getRichText } from '../../lib';
 import BannerProps from './BannerProps';
 
 const YX1BannerCard = ({ data, ...props }: BannerProps) => {

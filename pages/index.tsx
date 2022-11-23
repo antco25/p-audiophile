@@ -1,36 +1,36 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import { BannerProps, CategoryCard, getBannerProps, HomeHeroBanner, InfoBannerCard, YX1BannerCard, ZX7BannerCard, ZX9BannerCard } from '../components';
-import { client } from '../lib/sanityClient';
+import { Categories, client, formatCategories } from '../lib';
 import common from '../components/common.module.scss';
 
-//TODO: Get from db
-import tbHeadphones from '../public/assets/shared/desktop/image-category-thumbnail-headphones.png'
-import tbSpeakers from '../public/assets/shared/desktop/image-category-thumbnail-speakers.png'
-import tbEarphones from '../public/assets/shared/desktop/image-category-thumbnail-earphones.png'
-
-
-interface HomeProps {
-  XX99IIData : BannerProps,
-  ZX9Data: BannerProps,
-  ZX7Data: BannerProps,
-  YX1Data: BannerProps,
+export interface CommonPageProps {
+  categories: Categories[],
   InfoData: BannerProps
 }
 
-const Home = ({ XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
+interface HomeProps extends CommonPageProps {
+  XX99IIData: BannerProps,
+  ZX9Data: BannerProps,
+  ZX7Data: BannerProps,
+  YX1Data: BannerProps,
+}
+
+const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
   return (
     <div className={common.appWrap}>
-      <HomeHeroBanner data={XX99IIData.data}/>
+      <HomeHeroBanner data={XX99IIData.data} />
       <div className='flex gap-x-8 h-72 mt-28'>
-        <CategoryCard category='headphones' thumbnail={tbHeadphones} className='flex-1' />
-        <CategoryCard category='speakers' thumbnail={tbSpeakers} className='flex-1' />
-        <CategoryCard category='earphones' thumbnail={tbEarphones} className='flex-1' />
+        {
+          categories.map((category, index) => {
+            return <CategoryCard key={index} category={category.name} thumbnail={category.image} className='flex-1' />
+          })
+        }
       </div>
-      <ZX9BannerCard className='mt-40' data={ZX9Data.data}/>
+      <ZX9BannerCard className='mt-40' data={ZX9Data.data} />
       <ZX7BannerCard className='mt-12' data={ZX7Data.data} />
       <YX1BannerCard className='mt-12' data={YX1Data.data} />
-      <InfoBannerCard className='my-48' data={InfoData.data}/>
+      <InfoBannerCard className='my-48' data={InfoData.data} />
     </div>
   )
 }
@@ -38,6 +38,8 @@ const Home = ({ XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) =>
 export default Home
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+  const categoryQuery = `*[_type == "category"] | order(order)`;
+  const categories = formatCategories(await client.fetch(categoryQuery));
 
   const query = `*[_type == "banner"] | order(name) { ..., product->{slug} }`;
   const results = await client.fetch(query);
@@ -49,7 +51,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   const ZX9Data = getBannerProps(results[4])
 
   return {
-    props: { XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }
+    props: { categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }
   }
 }
 

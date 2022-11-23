@@ -1,18 +1,15 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router'
 import React from 'react'
-import { CategoryCard, InfoBannerCard, ProductCategoryCard } from '../../components';
+import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next';
+import { CategoryCard, getBannerProps, InfoBannerCard, ProductCategoryCard } from '../../components';
+import { client, formatCategories } from '../../lib';
+import { CommonPageProps } from '..';
 import commonStyles from '../../components/common.module.scss';
 
 //TODO: Get from db
-import tbHeadphones from '../../public/assets/shared/desktop/image-category-thumbnail-headphones.png'
-import tbSpeakers from '../../public/assets/shared/desktop/image-category-thumbnail-speakers.png'
-import tbEarphones from '../../public/assets/shared/desktop/image-category-thumbnail-earphones.png'
 import categoryData from '../../data/categoryData';
 
-
-const CategoryDetails = () => {
+const CategoryDetails = ({ categories, InfoData }: CommonPageProps) => {
   const router = useRouter()
   const { id } = router.query;
 
@@ -29,14 +26,30 @@ const CategoryDetails = () => {
           })
         }
         <div className='flex gap-x-8 h-72 mb-[160px]'>
-          <CategoryCard category='headphones' thumbnail={tbHeadphones} className='flex-1' />
-          <CategoryCard category='speakers' thumbnail={tbSpeakers} className='flex-1' />
-          <CategoryCard category='earphones' thumbnail={tbEarphones} className='flex-1' />
+          {
+            categories.map((category, index) => {
+              return <CategoryCard key={index} category={category.name} thumbnail={category.image} className='flex-1' />
+            })
+          }
         </div>
-        <InfoBannerCard className='mb-[160px]' />
+        <InfoBannerCard className='mb-[160px]' data={InfoData.data} />
       </div>
     </div>
   )
 }
 
 export default CategoryDetails
+
+export const getServerSideProps: GetServerSideProps<CommonPageProps> = async () => {
+  const categoryQuery = `*[_type == "category"] | order(order)`;
+  const categories = formatCategories(await client.fetch(categoryQuery));
+
+  const query = `*[_type == "banner" && name == "Info"] | { ..., product->{slug} }`;
+  const results = await client.fetch(query);
+
+  const InfoData = getBannerProps(results[0])
+
+  return {
+    props: { categories, InfoData }
+  }
+}

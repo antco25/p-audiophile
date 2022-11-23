@@ -1,17 +1,17 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { ArrowRight } from '../Icons';
 
 interface CategoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
     category: string,
-    thumbnail: StaticImageData
+    thumbnail: string,
 }
 
-const CategoryCard = ({ category, thumbnail, ...props } : CategoryCardProps) => {
+const CategoryCard = ({ category, thumbnail, ...props }: CategoryCardProps) => {
     return (
         <div {...props}>
-            <Link href={`/category/${category}`} className='h-full relative flex flex-col justify-end'>
+            <Link href={`/category/${category.toLowerCase()}`} className='h-full relative flex flex-col justify-end'>
                 <div className='bg-slate-200 rounded-lg h-52 p-8 uppercase relative flex flex-col justify-end'>
                     <h1 className='font-bold text-lg text-center mb-3.5'>{category}</h1>
                     <div className='flex justify-center'>
@@ -19,7 +19,10 @@ const CategoryCard = ({ category, thumbnail, ...props } : CategoryCardProps) => 
                         <ArrowRight className='inline-block self-center' />
                     </div>
                 </div>
-                <Image className='absolute w-[60%] left-2/4 -translate-x-2/4 bottom-[70px]' src={thumbnail} alt='category thumbnail' />
+                <Image className='absolute w-[60%] left-2/4 -translate-x-2/4 bottom-[70px]'
+                    src={thumbnail} alt='category thumbnail'
+                    width={500} height={500}
+                />
             </Link>
         </div>
     )

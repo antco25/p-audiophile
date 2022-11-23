@@ -1,10 +1,12 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import { GetServerSideProps } from 'next';
+import { Categories, client, formatCategories } from '../../lib';
 import commonStyles from '../../components/common.module.scss';
 import styles from './index.module.scss';
 
-//Get from db
+//TODO: Get from db
 import tbXX99 from '../../public/assets/shared/desktop/image-xx99-mark-two-headphones.jpg'
 import tbXX59 from '../../public/assets/shared/desktop/image-xx59-headphones.jpg'
 import tbZX9 from '../../public/assets/shared/desktop/image-zx9-speaker.jpg'
@@ -148,3 +150,12 @@ const Checkout = () => {
 }
 
 export default Checkout
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const categoryQuery = `*[_type == "category"] | order(order)`;
+  const categories = formatCategories(await client.fetch(categoryQuery));
+
+  return {
+    props: { categories }
+  }
+}
