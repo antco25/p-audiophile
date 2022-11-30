@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const QuantityCounter = ({ ...props }) => {
+interface QuantityCounterProps extends React.HTMLAttributes<HTMLDivElement> {
+    initialQuantity?: number,
+    onQuantityChange?: (quantity: number) => void
+}
 
-    const [quantity, setQuantity] = useState(1);
+const QuantityCounter = ({ initialQuantity, onQuantityChange, ...props }: QuantityCounterProps) => {
+
+    const [quantity, setQuantity] = useState(initialQuantity ? initialQuantity : 1);
+
+    useEffect(() => {
+        onQuantityChange?.(quantity);
+    }, [quantity])
+
     const increment = () => {
-        setQuantity((quantity) => quantity + 1 );
+        setQuantity((prevQuantity) => {
+            return prevQuantity + 1;
+        });
     }
+
     const decrement = () => {
-        setQuantity((quantity) => {
-            if (quantity - 1 < 1) return 1;
-            return quantity - 1;
-        } )
+        setQuantity((prevQuantity) => {
+            if (prevQuantity - 1 < 1) {
+                return 1;
+            }
+            return prevQuantity - 1;
+        })
     }
 
     return (

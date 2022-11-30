@@ -1,46 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { Categories, client, formatCategories } from '../../lib';
+import { client, formatCategories } from '../../lib';
+import { useStateContext } from '../../context/ContextWrap';
 import commonStyles from '../../components/common.module.scss';
 import styles from './index.module.scss';
 
-//TODO: Get from db
-import tbXX99 from '../../public/assets/shared/desktop/image-xx99-mark-two-headphones.jpg'
-import tbXX59 from '../../public/assets/shared/desktop/image-xx59-headphones.jpg'
-import tbZX9 from '../../public/assets/shared/desktop/image-zx9-speaker.jpg'
 
 //TODO:
 //Custom radio button
 //Radio select highlight when checked
 
-let cartData = [
-  {
-    name: 'XX99 MK II',
-    price: 2999,
-    quantity: 1,
-    thumbnail: tbXX99
-  },
-  {
-    name: 'XX59',
-    price: 899,
-    quantity: 2,
-    thumbnail: tbXX59
-  },
-  {
-    name: 'YX1',
-    price: 599,
-    quantity: 1,
-    thumbnail: tbZX9
-  },
-]
-
-//cartData = []
-const totalPrice = 5396;
-const shippingPrice = 50;
-
 const Checkout = () => {
+  const router = useRouter();
+  const { cartItems, totalPrice } = useStateContext();
+  const shippingPrice = 50;
+
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      router.push('/');
+    }
+  }, [cartItems])
+
   return (
     <div className={commonStyles.appWrap}>
       <Link href='/' className='block mt-20 mb-14 font-medium opacity-50'>Go back</Link>
@@ -109,17 +92,17 @@ const Checkout = () => {
             <h1 className='uppercase font-bold text-lg mb-8'>Summary</h1>
             <div className='mb-8 h-[240px] overflow-auto'>
               {
-                cartData.map((data, index, arr) => {
+                cartItems.map((cartItem, index, arr) => {
                   return (
                     <div key={index} className={`flex items-center${index + 1 === arr.length ? '' : ' mb-6'}`}>
                       <div className='w-16 h-16 mr-4'>
-                        <Image className='w-full h-full object-cover rounded-lg' src={data.thumbnail} alt='Product thumbnail' />
+                        <Image className='w-full h-full object-cover rounded-lg' src={cartItem.cartImage} width={150} height={150} alt='Product thumbnail' />
                       </div>
                       <div className='flex flex-col flex-1'>
-                        <span className='uppercase font-bold'>{data.name}</span>
-                        <span className='text-sm font-bold opacity-50'>$ {data.price.toLocaleString()}</span>
+                        <span className='uppercase font-bold'>{cartItem.name}</span>
+                        <span className='text-sm font-bold opacity-50'>$ {cartItem.price.toLocaleString()}</span>
                       </div>
-                      <p className='font-bold opacity-50'>x{data.quantity}</p>
+                      <p className='font-bold opacity-50'>x{cartItem.quantity}</p>
                     </div>
                   )
                 })

@@ -1,6 +1,6 @@
-import Image, { StaticImageData } from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { useStateContext } from '../../context/ContextWrap';
 import commonStyles from '../common.module.scss';
 import QuantityCounter from '../QuantityCounter';
 
@@ -10,16 +10,38 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
         newProduct: boolean,
         category: string,
         price: number,
-        image: StaticImageData,
-        description: string
+        image: string[],
+        description: string,
+        cartImage: string,
+        id: string
     },
 }
 
+//TODO: Media query for image
 const ProductCard = ({ data, ...props }: ProductCardProps) => {
+    const { addToCart } = useStateContext();
+    const [quantity, setQuantity] = useState(1);
+
+    const onAddToCart = () => {
+        const product = {
+            name: data.name,
+            price: data.price,
+            quantity: quantity,
+            cartImage: data.cartImage,
+            id: data.id
+        }
+
+        addToCart(product);
+    }
+
+    const onQuantityChange = (newQuantity: number) => {
+        setQuantity(newQuantity);
+    }
+
     return (
         <div className={`${props.className ? props.className + ' ' : ''}flex gap-x-[20px]`}>
             <div className='flex-1'>
-                <Image src={data.image} alt='Product image' className='rounded-lg' />
+                <Image src={data.image[0]} width={500} height={500} alt='Product image' className='rounded-lg' />
             </div>
             <div className='flex-1 flex flex-col justify-center items-start'>
                 <div className='ml-[105px]'>
@@ -28,8 +50,8 @@ const ProductCard = ({ data, ...props }: ProductCardProps) => {
                     <p className='mb-8 opacity-50 font-medium'>{data.description}</p>
                     <p className='mb-12 font-bold text-lg'>$ {data.price.toLocaleString()}</p>
                     <div className='flex gap-x-4'>
-                        <QuantityCounter />
-                        <button className={`${commonStyles.buttonLinkOne} text-white`}>Add to Cart</button>
+                        <QuantityCounter onQuantityChange={(onQuantityChange)} />
+                        <button className={`${commonStyles.buttonLinkOne} text-white`} onClick={onAddToCart}>Add to Cart</button>
                     </div>
                 </div>
             </div>

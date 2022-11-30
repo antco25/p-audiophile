@@ -1,28 +1,34 @@
-import React from 'react'
-import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 import { GetServerSideProps } from 'next';
-import { CategoryCard, getBannerProps, InfoBannerCard, ProductCategoryCard } from '../../components';
-import { client, formatCategories } from '../../lib';
+import { BannerProps, CategoryCard, getBannerProps, InfoBannerCard, ProductCategoryCard } from '../../components';
+import { CategoryProduct, client, formatCategories, formatCategoryProducts } from '../../lib';
 import { CommonPageProps } from '..';
+import { useStateContext } from '../../context/ContextWrap';
 import commonStyles from '../../components/common.module.scss';
 
-//TODO: Get from db
-import categoryData from '../../data/categoryData';
+interface CategoryDetailProps extends CommonPageProps {
+  category: string,
+  categoryProducts: CategoryProduct[]
+  InfoData: BannerProps
+}
 
-const CategoryDetails = ({ categories, InfoData }: CommonPageProps) => {
-  const router = useRouter()
-  const { id } = router.query;
+const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: CategoryDetailProps) => {
+  const { storeLink } = useStateContext();
+
+  useEffect(() => {
+    storeLink(`/category/${category}`, true)
+  }, [])
 
   return (
     <div>
       <div className='bg-black mb-[160px] '>
         <hr className={`${commonStyles.appWrap} border-white opacity-20`} />
-        <div className='text-white py-24 uppercase text-center font-bold text-4xl'>{id}</div>
+        <div className='text-white py-24 uppercase text-center font-bold text-4xl'>{category}</div>
       </div>
       <div className={commonStyles.appWrap}>
         {
-          categoryData.headphones.products.map((product, index) => {
-            return <ProductCategoryCard key={index} data={product} category='headphones' className='mb-[160px]' reverse={index % 2 !== 0} />
+          categoryProducts.map((product, index) => {
+            return <ProductCategoryCard key={index} data={product} className='mb-[160px]' reverse={index % 2 !== 0} />
           })
         }
         <div className='flex gap-x-8 h-72 mb-[160px]'>
@@ -40,16 +46,20 @@ const CategoryDetails = ({ categories, InfoData }: CommonPageProps) => {
 
 export default CategoryDetails
 
-export const getServerSideProps: GetServerSideProps<CommonPageProps> = async () => {
+//TODO: Error handling
+export const getServerSideProps: GetServerSideProps<CategoryDetailProps> = async (context) => {
   const categoryQuery = `*[_type == "category"] | order(order)`;
   const categories = formatCategories(await client.fetch(categoryQuery));
 
-  const query = `*[_type == "banner" && name == "Info"] | { ..., product->{slug} }`;
-  const results = await client.fetch(query);
+  const category = context.params?.id as string || '';
+  const urlCategory = categories.find(el => el.name.toLowerCase() === category);
+  const categoryProductsQuery = `*[_type == "product" && category._ref == "${urlCategory?.id}"] | order(name desc)`;
+  const categoryProducts = formatCategoryProducts(await client.fetch(categoryProductsQuery), urlCategory?.name.toLowerCase() || '');
 
-  const InfoData = getBannerProps(results[0])
+  const infoQuery = `*[_type == "banner" && name == "Info"][0] | { ..., product->{slug} }`;
+  const InfoData = getBannerProps(await client.fetch(infoQuery))
 
   return {
-    props: { categories, InfoData }
+    props: { category, categories, categoryProducts, InfoData }
   }
 }

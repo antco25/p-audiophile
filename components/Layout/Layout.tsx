@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import { useStateContext } from '../../context/ContextWrap'
 import CartModal from '../CartModal'
 import Footer from '../Footer'
 import Navbar from '../Navbar/Navbar'
@@ -9,10 +10,9 @@ interface Props {
     categories: any
 }
 
-//TODO: state
-const cartOpen = false;
-
 const Layout: React.FC<Props> = ({ categories, children }) => {
+    const { showCart } = useStateContext();
+
     return (
         <div className='Layout'>
             <Head>
@@ -21,7 +21,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
             </Head>
             <header>
                 <Navbar categories={categories} background={true} />
-                {cartOpen && <CartModal />}
+                {showCart && <CartModal />}
             </header>
             <main>
                 {children}

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { BannerProps, CategoryCard, getBannerProps, HomeHeroBanner, InfoBannerCard, YX1BannerCard, ZX7BannerCard, ZX9BannerCard } from '../components';
 import { Categories, client, formatCategories } from '../lib';
+import { useStateContext } from '../context/ContextWrap';
 import common from '../components/common.module.scss';
 
 export interface CommonPageProps {
   categories: Categories[],
-  InfoData: BannerProps
 }
 
 interface HomeProps extends CommonPageProps {
@@ -14,9 +14,16 @@ interface HomeProps extends CommonPageProps {
   ZX9Data: BannerProps,
   ZX7Data: BannerProps,
   YX1Data: BannerProps,
+  InfoData: BannerProps
 }
 
 const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
+  const { storeLink } = useStateContext();
+
+  useEffect(() => {
+    storeLink('/', true)
+  }, [])
+
   return (
     <div className={common.appWrap}>
       <HomeHeroBanner data={XX99IIData.data} />
