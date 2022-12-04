@@ -28,7 +28,7 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
 
   return (
     <div className={commonStyles.appWrap}>
-      <Link href={getPrevLink()} onClick={consumePrevLink} className='inline-block mt-20 mb-14 font-medium opacity-50'>Go back</Link>
+      <Link href={getPrevLink()} onClick={consumePrevLink} className='inline-block mt-20 mb-14 font-medium opacity-50 hover:underline'>Go back</Link>
       <ProductCard data={product} className='mb-[160px]' />
       <div className='flex mb-[160px]'>
         <div className='max-w-[650px]'>

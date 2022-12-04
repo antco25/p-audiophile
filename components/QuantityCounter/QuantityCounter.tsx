@@ -13,6 +13,10 @@ const QuantityCounter = ({ initialQuantity, onQuantityChange, ...props }: Quanti
         onQuantityChange?.(quantity);
     }, [quantity])
 
+    useEffect(() => {
+        setQuantity(initialQuantity? initialQuantity : 1);
+    }, [initialQuantity])
+
     const increment = () => {
         setQuantity((prevQuantity) => {
             return prevQuantity + 1;
@@ -30,9 +34,9 @@ const QuantityCounter = ({ initialQuantity, onQuantityChange, ...props }: Quanti
 
     return (
         <div className={`${props.className ? props.className + ' ' : ''} flex items-center font-bold text-center text-sm leading-[18px] bg-slate-100`}>
-            <button className='opacity-50 box-content w-4 p-4' onClick={decrement}>-</button>
+            <button className='opacity-50 box-content w-4 p-4 hover:text-orange-500' onClick={decrement}>-</button>
             <p className='self-center w-6'>{quantity}</p>
-            <button className='opacity-50 box-content w-4 p-4' onClick={increment}>+</button>
+            <button className='opacity-50 box-content w-4 p-4 hover:text-orange-500' onClick={increment}>+</button>
         </div>
     )
 }

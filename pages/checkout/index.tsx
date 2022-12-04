@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,26 +7,39 @@ import { client, formatCategories } from '../../lib';
 import { useStateContext } from '../../context/ContextWrap';
 import commonStyles from '../../components/common.module.scss';
 import styles from './index.module.scss';
-
-
-//TODO:
-//Custom radio button
-//Radio select highlight when checked
+import { PurchasedModal } from '../../components';
+import { CashOn } from '../../components/Icons';
 
 const Checkout = () => {
   const router = useRouter();
-  const { cartItems, totalPrice } = useStateContext();
+  const { setShowCart, cartItems, totalPrice, getPrevLink, storeLink, consumePrevLink } = useStateContext();
   const shippingPrice = 50;
+  const [purchaseModal, setPurchaseModal] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState(false);
+  const [address, setAddress] = useState('');
+  const [zip, setZip] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [payment, setPayment] = useState('eMoney');
+  const [eNum, setENum] = useState('');
+  const [ePin, setEPin] = useState('');
 
   useEffect(() => {
     if (cartItems.length === 0) {
+      setShowCart(false);
       router.push('/');
     }
   }, [cartItems])
 
+  useEffect(() => {
+    storeLink(router.asPath);
+  }, [router.asPath])
+
   return (
     <div className={commonStyles.appWrap}>
-      <Link href='/' className='block mt-20 mb-14 font-medium opacity-50'>Go back</Link>
+      <Link href={getPrevLink()} onClick={consumePrevLink} className='block mt-20 mb-14 font-medium opacity-50 hover:underline'>Go back</Link>
       <div className='flex gap-x-5 mb-36'>
         <form className='flex-1 bg-slate-100 p-12 rounded-lg'>
           <h1 className='uppercase font-bold text-[32px] mt-[6px] mb-10'>Checkout</h1>
@@ -69,22 +82,36 @@ const Checkout = () => {
             <div className='col-span-2 grid grid-cols-2 gap-x-4 gap-y-4'>
               <label className={`${styles.label} !mb-0 row-span-2`} htmlFor='payMethod'>Payment Method</label>
               <div className={styles.inputWrapRadio}>
-                <input className='absolute left-6' id='eMoney' type="radio" name='payMethod' value="eMoney" defaultChecked />
-                <label className={styles.labelRadio} htmlFor='eMoney'>e-Money</label>
+                <input className='absolute invisible' id='eMoney' type="radio" name='payMethod' value="eMoney" defaultChecked />
+                <label className={`${styles.labelRadio}${payment === 'eMoney' ? ' ' + styles.activeRadio : ''}`}
+                  onClick={() => setPayment('eMoney')} htmlFor='eMoney'>e-Money</label>
               </div>
               <div className={styles.inputWrapRadio}>
-                <input className='absolute left-6' id='cash' type="radio" name='payMethod' value="cash" />
-                <label className={styles.labelRadio} htmlFor='cash'>Cash on Delivery</label>
+                <input className='absolute invisible' id='cash' type="radio" name='payMethod' value="cash" />
+                <label className={`${styles.labelRadio}${payment === 'cash' ? ' ' + styles.activeRadio : ''}`}
+                  onClick={() => setPayment('cash')} htmlFor='cash'>Cash on Delivery</label>
               </div>
             </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='moneyNumber'>e-Money Number</label>
-              <input className={styles.input} type="number" name='moneyNumber' placeholder="238521993" />
-            </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='moneyPin'>e-Money PIN</label>
-              <input className={styles.input} type="number" name='moneyPin' placeholder="6891" />
-            </div>
+            {
+              payment === 'eMoney' ?
+                <>
+                  <div className='flex flex-col'>
+                    <label className={styles.label} htmlFor='moneyNumber'>e-Money Number</label>
+                    <input className={styles.input} type="number" name='moneyNumber' placeholder="238521993" />
+                  </div>
+                  <div className='flex flex-col'>
+                    <label className={styles.label} htmlFor='moneyPin'>e-Money PIN</label>
+                    <input className={styles.input} type="number" name='moneyPin' placeholder="6891" />
+                  </div>
+                </> :
+                <div className='col-span-2 mt-2 flex items-center'>
+                  <CashOn />
+                  <p className='flex-1 font-medium opacity-50 ml-8'>
+                    The ‘Cash on Delivery’ option enables you to pay in cash when our delivery courier arrives at your residence.
+                    Just make sure your address is correct so that your order will not be cancelled.
+                  </p>
+                </div>
+            }
           </div>
         </form>
         <div className='w-[350px]'>
@@ -124,10 +151,11 @@ const Checkout = () => {
               <span className='flex-1 uppercase opacity-50 font-medium'>Grand Total</span>
               <span className='text-lg font-bold text-orange-500'>$ {(totalPrice + shippingPrice).toLocaleString()}</span>
             </div>
-            <Link href='/' className={`${commonStyles.buttonLinkOne} text-white text-center block`}>Continue & Pay</Link>
+            <button className={`${commonStyles.buttonLinkOne} text-white text-center block w-full`} onClick={() => setPurchaseModal(true)}>Continue & Pay</button>
           </div>
         </div>
       </div>
+      {purchaseModal ? <PurchasedModal totalPrice={totalPrice + shippingPrice} /> : null}
     </div>
   )
 }

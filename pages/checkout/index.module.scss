@@ -7,7 +7,7 @@
 }
 
 .inputWrapRadio {
-    @apply flex items-center relative;
+    @apply flex relative;
 
     &:hover .labelRadio {
         @apply border-orange-500;
@@ -15,7 +15,21 @@
 }
 
 .labelRadio {
-    @apply font-bold text-sm inline-block flex-1 pl-14 pr-6 py-4 border rounded-lg;
+    @apply font-bold text-sm inline-block flex-1 pl-[52px] pr-6 py-4 border rounded-lg cursor-pointer;
+
+    &:after {
+        @apply absolute left-4 border-solid border-4 border-slate-100 bg-transparent w-[18px] h-[18px] rounded-3xl;
+        content: "";
+        box-shadow: 0 0 0 2px #e5e7eb;
+    }
+
+    &.activeRadio {
+        @apply border-orange-500;
+
+        &:after {
+            @apply bg-orange-500;
+        }
+    }
 }
 
 .input {

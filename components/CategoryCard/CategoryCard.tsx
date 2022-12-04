@@ -11,11 +11,11 @@ interface CategoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const CategoryCard = ({ category, thumbnail, ...props }: CategoryCardProps) => {
     return (
         <div {...props}>
-            <Link href={`/category/${category.toLowerCase()}`} className='h-full relative flex flex-col justify-end'>
+            <Link href={`/category/${category.toLowerCase()}`} className='h-full relative flex flex-col justify-end group'>
                 <div className='bg-slate-200 rounded-lg h-52 p-8 uppercase relative flex flex-col justify-end'>
                     <h1 className='font-bold text-lg text-center mb-3.5'>{category}</h1>
                     <div className='flex justify-center'>
-                        <p className='inline-block text-xs opacity-50 mr-3'>Shop</p>
+                        <p className='inline-block text-xs opacity-50 mr-3 group-hover:text-orange-500'>Shop</p>
                         <ArrowRight className='inline-block self-center' />
                     </div>
                 </div>

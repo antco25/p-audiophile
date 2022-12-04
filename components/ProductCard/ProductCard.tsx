@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/ContextWrap';
 import commonStyles from '../common.module.scss';
 import QuantityCounter from '../QuantityCounter';
@@ -13,14 +13,19 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
         image: string[],
         description: string,
         cartImage: string,
-        id: string
+        id: string,
+        slug: string,
     },
 }
 
 //TODO: Media query for image
 const ProductCard = ({ data, ...props }: ProductCardProps) => {
-    const { addToCart } = useStateContext();
+    const { setShowCart, addToCart } = useStateContext();
     const [quantity, setQuantity] = useState(1);
+
+    useEffect(() => {
+        setQuantity(1);
+    }, [data])
 
     const onAddToCart = () => {
         const product = {
@@ -28,10 +33,12 @@ const ProductCard = ({ data, ...props }: ProductCardProps) => {
             price: data.price,
             quantity: quantity,
             cartImage: data.cartImage,
-            id: data.id
+            id: data.id,
+            slug: data.slug
         }
 
         addToCart(product);
+        setShowCart(true);
     }
 
     const onQuantityChange = (newQuantity: number) => {
@@ -50,7 +57,7 @@ const ProductCard = ({ data, ...props }: ProductCardProps) => {
                     <p className='mb-8 opacity-50 font-medium'>{data.description}</p>
                     <p className='mb-12 font-bold text-lg'>$ {data.price.toLocaleString()}</p>
                     <div className='flex gap-x-4'>
-                        <QuantityCounter onQuantityChange={(onQuantityChange)} />
+                        <QuantityCounter initialQuantity={quantity} onQuantityChange={(onQuantityChange)} />
                         <button className={`${commonStyles.buttonLinkOne} text-white`} onClick={onAddToCart}>Add to Cart</button>
                     </div>
                 </div>

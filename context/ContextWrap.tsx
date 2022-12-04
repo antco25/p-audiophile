@@ -15,7 +15,9 @@ interface ContextType {
   totalPrice: number,
   getPrevLink: () => string,
   consumePrevLink: () => void,
-  storeLink: (link: string, reset?: boolean) => void
+  storeLink: (link: string, reset?: boolean) => void,
+  resetCart: boolean,
+  setResetCart: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export interface CartItem {
@@ -23,7 +25,8 @@ export interface CartItem {
   price: number,
   quantity: number,
   cartImage: string,
-  id: string
+  id: string,
+  slug: string
 }
 
 const Context = createContext({} as ContextType);
@@ -33,6 +36,7 @@ export const ContextWrap: React.FC<ContextWrapProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [linkHistory, setLinkHistory] = useState(['/']);
+  const [resetCart, setResetCart] = useState(false);
 
   const getPrevLink = () => {
     if (linkHistory.length === 0) {
@@ -135,6 +139,8 @@ export const ContextWrap: React.FC<ContextWrapProps> = ({ children }) => {
         getPrevLink,
         consumePrevLink,
         storeLink,
+        resetCart,
+        setResetCart,
       }}
     >
       {children}

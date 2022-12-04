@@ -18,10 +18,15 @@ interface HomeProps extends CommonPageProps {
 }
 
 const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
-  const { storeLink } = useStateContext();
+  const { resetCart, setResetCart, removeAllCart, storeLink } = useStateContext();
 
   useEffect(() => {
     storeLink('/', true)
+
+    if (resetCart) {
+      setResetCart(false);
+      removeAllCart();
+    }
   }, [])
 
   return (

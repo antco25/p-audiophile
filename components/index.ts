@@ -9,3 +9,5 @@ export { default as ProductCard } from './ProductCard';
 export { default as ProductCategoryCard } from './ProductCategoryCard';
 export { default as QuantityCounter } from './QuantityCounter';
 export { default as RecommendCard } from './RecommendCard';
+export { default as CartModal } from './CartModal';
+export { default as PurchasedModal } from './PurchasedModal';
