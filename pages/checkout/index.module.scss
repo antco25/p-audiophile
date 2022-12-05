@@ -4,6 +4,18 @@
 
 .label {
     @apply font-bold text-xs mb-[9px];
+
+    &.error {
+        @apply text-red-700
+    }
+}
+
+.input {
+    @apply px-6 py-4 border rounded-lg text-sm font-bold hover:border-orange-500 focus:border-orange-500 outline-none;
+
+    &.error {
+        @apply border-red-700;
+    }
 }
 
 .inputWrapRadio {
@@ -30,8 +42,4 @@
             @apply bg-orange-500;
         }
     }
-}
-
-.input {
-    @apply px-6 py-4 border rounded-lg text-sm font-bold hover:border-orange-500 focus:border-orange-500 outline-none;
 }

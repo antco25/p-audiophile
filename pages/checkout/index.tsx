@@ -10,21 +10,56 @@ import styles from './index.module.scss';
 import { PurchasedModal } from '../../components';
 import { CashOn } from '../../components/Icons';
 
+interface FormFieldProps {
+  className: string,
+  id: string,
+  label: string,
+  placeholder: string,
+  inputType: string,
+  maxLength?: number,
+  data: { value: string, error: boolean, errMessage: string },
+  setData: React.Dispatch<React.SetStateAction<{
+    value: string; error: boolean; errMessage: string;
+  }>>
+}
+const FormField = ({ className, id, label, placeholder, inputType, maxLength, data, setData }: FormFieldProps) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (inputType === 'number' && e.target.value)
+      if (maxLength && e.target.value.length > maxLength)
+        return;
+    setData({ value: e.target.value, error: false, errMessage: '' })
+  }
+
+  return (
+    <div className={className}>
+      <label className={`${styles.label}${data.error ? ' ' + styles.error : ''}`} htmlFor={id}>{label}</label>
+      {data.error ? <span className='absolute right-0 font-medium text-xs text-red-700'>{data.errMessage}</span> : null}
+      <input className={`${styles.input}${data.error ? ' ' + styles.error : ''}`} type={inputType} name={id} placeholder={placeholder}
+        value={data.value} onInput={handleInputChange} onWheel={inputType === 'number' ? (e) => e.currentTarget.blur() : undefined}
+      />
+    </div>
+  )
+}
+
+//TODO: 
+//When switch from cash to emoney, reset validation
+//Validation for numbers
+
 const Checkout = () => {
   const router = useRouter();
   const { setShowCart, cartItems, totalPrice, getPrevLink, storeLink, consumePrevLink } = useStateContext();
   const shippingPrice = 50;
   const [purchaseModal, setPurchaseModal] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState(false);
-  const [address, setAddress] = useState('');
-  const [zip, setZip] = useState('');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
+  const [name, setName] = useState({ value: '', error: false, errMessage: '' });
+  const [email, setEmail] = useState({ value: '', error: false, errMessage: '' });
+  const [phone, setPhone] = useState({ value: '', error: false, errMessage: '' });
+  const [address, setAddress] = useState({ value: '', error: false, errMessage: '' });
+  const [zip, setZip] = useState({ value: '', error: false, errMessage: '' });
+  const [city, setCity] = useState({ value: '', error: false, errMessage: '' });
+  const [country, setCountry] = useState({ value: '', error: false, errMessage: '' });
   const [payment, setPayment] = useState('eMoney');
-  const [eNum, setENum] = useState('');
-  const [ePin, setEPin] = useState('');
+  const [eNum, setENum] = useState({ value: '', error: false, errMessage: '' });
+  const [ePin, setEPin] = useState({ value: '', error: false, errMessage: '' });
 
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -37,6 +72,47 @@ const Checkout = () => {
     storeLink(router.asPath);
   }, [router.asPath])
 
+  const handleSubmit = () => {
+    let hasError = false;
+    const fields = [
+      { data: name, setData: setName },
+      { data: email, setData: setEmail },
+      { data: phone, setData: setPhone },
+      { data: address, setData: setAddress },
+      { data: zip, setData: setZip },
+      { data: city, setData: setCity },
+      { data: country, setData: setCountry },
+    ]
+
+    if (payment === 'eMoney') {
+      fields.push({ data: eNum, setData: setENum })
+      fields.push({ data: ePin, setData: setEPin })
+    }
+
+    //Check email format
+    if (!email.value.match(/^\S+@\S+\.\S+$/)) {
+      setEmail(old => { return { value: old.value, error: true, errMessage: 'Wrong format' } })
+      hasError = true;
+    }
+
+    //Check ZIP Code
+    if (!/^\d+$/.test(zip.value)) {
+      setZip(old => { return { value: old.value, error: true, errMessage: 'Wrong format' } })
+      hasError = true;
+    }
+
+    //Check empty
+    fields.forEach((input) => {
+      if (input.data.value.trim().length === 0) {
+        input.setData({ value: '', error: true, errMessage: 'Required' })
+        hasError = true;
+      }
+    })
+
+    if (!hasError) {
+      //setPurchaseModal(true);
+    }
+  }
   return (
     <div className={commonStyles.appWrap}>
       <Link href={getPrevLink()} onClick={consumePrevLink} className='block mt-20 mb-14 font-medium opacity-50 hover:underline'>Go back</Link>
@@ -45,37 +121,23 @@ const Checkout = () => {
           <h1 className='uppercase font-bold text-[32px] mt-[6px] mb-10'>Checkout</h1>
           <h2 className={styles.subHeader}>Billing Details</h2>
           <div className='grid grid-cols-2 gap-x-4 gap-y-6 mb-12'>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='name'>Name</label>
-              <input className={styles.input} type="text" name='name' placeholder="Alexei Ward" />
-            </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='email'>Email Address</label>
-              <input className={styles.input} type="email" name='email' placeholder="alexeiward@gmail.com" />
-            </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='phone'>Phone Number</label>
-              <input className={styles.input} type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" name='phone' placeholder="202-555-0136" />
-            </div>
+            <FormField className={'flex flex-col relative'} id={'name'} label={'Name'}
+              placeholder={'Alexei Ward'} inputType={'text'} data={name} setData={setName} />
+            <FormField className={'flex flex-col relative'} id={'email'} label={'Email Address'}
+              placeholder={'alexeiward@gmail.com'} inputType={'email'} data={email} setData={setEmail} />
+            <FormField className={'flex flex-col relative'} id={'phone'} label={'Phone Number'}
+              placeholder={'202-555-0136'} inputType={'tel'} data={phone} setData={setPhone} />
           </div>
           <h2 className={styles.subHeader}>Shipping Info</h2>
           <div className='grid grid-cols-2 gap-x-4 gap-y-6 mb-12'>
-            <div className='flex flex-col col-span-2'>
-              <label className={styles.label} htmlFor='address'>Address</label>
-              <input className={styles.input} type="text" name='address' placeholder="1137 Williams Avenue" />
-            </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='zip'>Zip Code</label>
-              <input className={styles.input} type="number" name='zip' placeholder="10001" />
-            </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='city'>City</label>
-              <input className={styles.input} type="text" name='city' placeholder="New York" />
-            </div>
-            <div className='flex flex-col'>
-              <label className={styles.label} htmlFor='country'>Country</label>
-              <input className={styles.input} type="text" name='country' placeholder="United States" />
-            </div>
+            <FormField className={'flex flex-col col-span-2 relative'} id={'address'} label={'Address'}
+              placeholder={'1137 Williams Avenue'} inputType={'text'} data={address} setData={setAddress} />
+            <FormField className={'flex flex-col relative'} id={'zip'} label={'Zip Code'}
+              placeholder={'10001'} inputType={'number'} data={zip} setData={setZip} />
+            <FormField className={'flex flex-col relative'} id={'city'} label={'City'}
+              placeholder={'New York'} inputType={'text'} data={city} setData={setCity} />
+            <FormField className={'flex flex-col relative'} id={'country'} label={'Country'}
+              placeholder={'United States'} inputType={'text'} data={country} setData={setCountry} />
           </div>
           <h2 className={styles.subHeader}>Payment Details</h2>
           <div className='grid grid-cols-2 gap-x-4 gap-y-6'>
@@ -95,16 +157,12 @@ const Checkout = () => {
             {
               payment === 'eMoney' ?
                 <>
-                  <div className='flex flex-col'>
-                    <label className={styles.label} htmlFor='moneyNumber'>e-Money Number</label>
-                    <input className={styles.input} type="number" name='moneyNumber' placeholder="238521993" />
-                  </div>
-                  <div className='flex flex-col'>
-                    <label className={styles.label} htmlFor='moneyPin'>e-Money PIN</label>
-                    <input className={styles.input} type="number" name='moneyPin' placeholder="6891" />
-                  </div>
+                  <FormField className={'flex flex-col relative'} id={'moneyNumber'} label={'e-Money Number'}
+                    placeholder={'238521993'} inputType={'number'} data={eNum} setData={setENum} maxLength={9} />
+                  <FormField className={'flex flex-col relative'} id={'moneyPin'} label={'e-Money PIN'}
+                    placeholder={'6891'} inputType={'number'} data={ePin} setData={setEPin} maxLength={4} />
                 </> :
-                <div className='col-span-2 mt-2 flex items-center'>
+                <div className='col-span-2 mt-[7px] flex items-center'>
                   <CashOn />
                   <p className='flex-1 font-medium opacity-50 ml-8'>
                     The ‘Cash on Delivery’ option enables you to pay in cash when our delivery courier arrives at your residence.
@@ -151,7 +209,7 @@ const Checkout = () => {
               <span className='flex-1 uppercase opacity-50 font-medium'>Grand Total</span>
               <span className='text-lg font-bold text-orange-500'>$ {(totalPrice + shippingPrice).toLocaleString()}</span>
             </div>
-            <button className={`${commonStyles.buttonLinkOne} text-white text-center block w-full`} onClick={() => setPurchaseModal(true)}>Continue & Pay</button>
+            <button className={`${commonStyles.buttonLinkOne} text-white text-center block w-full`} onClick={handleSubmit}>Continue & Pay</button>
           </div>
         </div>
       </div>
