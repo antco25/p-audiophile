@@ -9,41 +9,7 @@ import commonStyles from '../../components/common.module.scss';
 import styles from './index.module.scss';
 import { PurchasedModal } from '../../components';
 import { CashOn } from '../../components/Icons';
-
-interface FormFieldProps {
-  className: string,
-  id: string,
-  label: string,
-  placeholder: string,
-  inputType: string,
-  maxLength?: number,
-  data: { value: string, error: boolean, errMessage: string },
-  setData: React.Dispatch<React.SetStateAction<{
-    value: string; error: boolean; errMessage: string;
-  }>>
-}
-const FormField = ({ className, id, label, placeholder, inputType, maxLength, data, setData }: FormFieldProps) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (inputType === 'number' && e.target.value)
-      if (maxLength && e.target.value.length > maxLength)
-        return;
-    setData({ value: e.target.value, error: false, errMessage: '' })
-  }
-
-  return (
-    <div className={className}>
-      <label className={`${styles.label}${data.error ? ' ' + styles.error : ''}`} htmlFor={id}>{label}</label>
-      {data.error ? <span className='absolute right-0 font-medium text-xs text-red-700'>{data.errMessage}</span> : null}
-      <input className={`${styles.input}${data.error ? ' ' + styles.error : ''}`} type={inputType} name={id} placeholder={placeholder}
-        value={data.value} onInput={handleInputChange} onWheel={inputType === 'number' ? (e) => e.currentTarget.blur() : undefined}
-      />
-    </div>
-  )
-}
-
-//TODO: 
-//When switch from cash to emoney, reset validation
-//Validation for numbers
+import FormField from './FormField';
 
 const Checkout = () => {
   const router = useRouter();
@@ -72,37 +38,42 @@ const Checkout = () => {
     storeLink(router.asPath);
   }, [router.asPath])
 
+  const handleSetPayment = (payment: string) => {
+    setPayment(payment);
+
+    if (payment === 'cash') {
+      setENum({ value: '', error: false, errMessage: '' });
+      setEPin({ value: '', error: false, errMessage: '' })
+    }
+  }
+
   const handleSubmit = () => {
     let hasError = false;
     const fields = [
-      { data: name, setData: setName },
-      { data: email, setData: setEmail },
-      { data: phone, setData: setPhone },
-      { data: address, setData: setAddress },
-      { data: zip, setData: setZip },
-      { data: city, setData: setCity },
-      { data: country, setData: setCountry },
+      { data: name, setData: setName, type: 'text' },
+      { data: email, setData: setEmail, type: 'email' },
+      { data: phone, setData: setPhone, type: 'tel' },
+      { data: address, setData: setAddress, type: 'text' },
+      { data: zip, setData: setZip, type: 'number' },
+      { data: city, setData: setCity, type: 'text' },
+      { data: country, setData: setCountry, type: 'text' },
     ]
 
     if (payment === 'eMoney') {
-      fields.push({ data: eNum, setData: setENum })
-      fields.push({ data: ePin, setData: setEPin })
+      fields.push({ data: eNum, setData: setENum, type: 'number' })
+      fields.push({ data: ePin, setData: setEPin, type: 'number' })
     }
 
-    //Check email format
-    if (!email.value.match(/^\S+@\S+\.\S+$/)) {
-      setEmail(old => { return { value: old.value, error: true, errMessage: 'Wrong format' } })
-      hasError = true;
-    }
-
-    //Check ZIP Code
-    if (!/^\d+$/.test(zip.value)) {
-      setZip(old => { return { value: old.value, error: true, errMessage: 'Wrong format' } })
-      hasError = true;
-    }
-
-    //Check empty
     fields.forEach((input) => {
+      //Check number, tel or email doesn't already have errors
+      if ((input.type === 'number' || input.type === 'tel' || input.type === 'email')
+        && input.data.errMessage !== '') {
+        input.setData(old => { return { value: old.value, error: true, errMessage: old.errMessage } })
+        hasError = true;
+        return;
+      }
+
+      //Check empty
       if (input.data.value.trim().length === 0) {
         input.setData({ value: '', error: true, errMessage: 'Required' })
         hasError = true;
@@ -110,7 +81,7 @@ const Checkout = () => {
     })
 
     if (!hasError) {
-      //setPurchaseModal(true);
+      setPurchaseModal(true);
     }
   }
   return (
@@ -133,7 +104,7 @@ const Checkout = () => {
             <FormField className={'flex flex-col col-span-2 relative'} id={'address'} label={'Address'}
               placeholder={'1137 Williams Avenue'} inputType={'text'} data={address} setData={setAddress} />
             <FormField className={'flex flex-col relative'} id={'zip'} label={'Zip Code'}
-              placeholder={'10001'} inputType={'number'} data={zip} setData={setZip} />
+              placeholder={'10001'} inputType={'number'} length={5} data={zip} setData={setZip} />
             <FormField className={'flex flex-col relative'} id={'city'} label={'City'}
               placeholder={'New York'} inputType={'text'} data={city} setData={setCity} />
             <FormField className={'flex flex-col relative'} id={'country'} label={'Country'}
@@ -146,21 +117,21 @@ const Checkout = () => {
               <div className={styles.inputWrapRadio}>
                 <input className='absolute invisible' id='eMoney' type="radio" name='payMethod' value="eMoney" defaultChecked />
                 <label className={`${styles.labelRadio}${payment === 'eMoney' ? ' ' + styles.activeRadio : ''}`}
-                  onClick={() => setPayment('eMoney')} htmlFor='eMoney'>e-Money</label>
+                  onClick={() => handleSetPayment('eMoney')} htmlFor='eMoney'>e-Money</label>
               </div>
               <div className={styles.inputWrapRadio}>
                 <input className='absolute invisible' id='cash' type="radio" name='payMethod' value="cash" />
                 <label className={`${styles.labelRadio}${payment === 'cash' ? ' ' + styles.activeRadio : ''}`}
-                  onClick={() => setPayment('cash')} htmlFor='cash'>Cash on Delivery</label>
+                  onClick={() => handleSetPayment('cash')} htmlFor='cash'>Cash on Delivery</label>
               </div>
             </div>
             {
               payment === 'eMoney' ?
                 <>
                   <FormField className={'flex flex-col relative'} id={'moneyNumber'} label={'e-Money Number'}
-                    placeholder={'238521993'} inputType={'number'} data={eNum} setData={setENum} maxLength={9} />
+                    placeholder={'238521993'} inputType={'number'} length={9} data={eNum} setData={setENum} />
                   <FormField className={'flex flex-col relative'} id={'moneyPin'} label={'e-Money PIN'}
-                    placeholder={'6891'} inputType={'number'} data={ePin} setData={setEPin} maxLength={4} />
+                    placeholder={'6891'} inputType={'number'} length={4} data={ePin} setData={setEPin} />
                 </> :
                 <div className='col-span-2 mt-[7px] flex items-center'>
                   <CashOn />
