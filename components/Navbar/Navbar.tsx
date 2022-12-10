@@ -11,10 +11,10 @@ interface NavbarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Navbar = ({ categories, background }: NavbarProps) => {
-  const { setShowCart } = useStateContext();
+  const { cartItems, setShowCart } = useStateContext();
 
   const onShowCart = () => {
-    window.scrollTo(0,0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     setShowCart(true);
   }
 
@@ -28,7 +28,14 @@ const Navbar = ({ categories, background }: NavbarProps) => {
             return <Link className={`${common.navLink} mx-4`} key={index} href={`/category/${category.name.toLowerCase()}`}>{category.name}</Link>
           })}
         </nav>
-        <button className='p-1' onClick={() => onShowCart()}><Cart /></button>
+        <button className='p-1 relative' onClick={() => onShowCart()}>
+          <Cart />
+          {
+            cartItems.length === 0 ? null :
+              <span className='absolute -top-2 -right-2 bg-orange-600 rounded-full w-5 h-5 inline-block font-medium text-xs p-[2px]'>{cartItems.length}</span>
+          }
+
+        </button>
       </div>
 
     </div>

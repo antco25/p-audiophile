@@ -37,6 +37,7 @@ const ProductCard = ({ data, ...props }: ProductCardProps) => {
             slug: data.slug
         }
 
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         addToCart(product);
         setShowCart(true);
     }
