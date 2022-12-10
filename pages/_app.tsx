@@ -6,7 +6,7 @@ import { ContextWrap } from '../context/ContextWrap'
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ContextWrap>
-      <Layout categories={pageProps.categories}>
+      <Layout categories={pageProps.categories} currentRoute={pageProps.currentRoute}>
         <Component {...pageProps} />
       </Layout>
     </ContextWrap>

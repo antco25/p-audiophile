@@ -7,12 +7,13 @@ import Navbar from '../Navbar/Navbar'
 
 interface Props {
     children?: React.ReactNode,
-    categories: any
+    categories: any,
+    currentRoute? : string
 }
 
-const Layout: React.FC<Props> = ({ categories, children }) => {
+const Layout: React.FC<Props> = ({ categories, children, currentRoute }) => {
     const { showCart } = useStateContext();
-
+    
     return (
         <div className='Layout'>
             <Head>
@@ -20,7 +21,7 @@ const Layout: React.FC<Props> = ({ categories, children }) => {
                 <link rel="icon" href="/favicon-32x32.png" />
             </Head>
             <header>
-                <Navbar categories={categories} background={true} />
+                <Navbar categories={categories} background={currentRoute !== '/'} />
                 {showCart && <CartModal />}
             </header>
             <main>

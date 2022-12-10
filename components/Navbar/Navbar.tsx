@@ -19,7 +19,7 @@ const Navbar = ({ categories, background }: NavbarProps) => {
   }
 
   return (
-    <div className={`Navbar text-white${background ? ' bg-black' : ''}`}>
+    <div className={`text-white${background ? ' bg-black' : ''}`}>
       <div className={`${common.appWrap} flex justify-center items-center pt-7 pb-8`}>
         <Logo className='flex-1 my-1' />
         <nav className='flex justify-center absolute'>

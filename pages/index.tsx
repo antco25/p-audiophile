@@ -14,7 +14,7 @@ interface HomeProps extends CommonPageProps {
   ZX9Data: BannerProps,
   ZX7Data: BannerProps,
   YX1Data: BannerProps,
-  InfoData: BannerProps
+  InfoData: BannerProps,
 }
 
 const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
@@ -31,6 +31,7 @@ const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: H
 
   return (
     <div className={common.appWrap}>
+      <hr className={`$border-white opacity-20`} />
       <HomeHeroBanner data={XX99IIData.data} />
       <div className='flex gap-x-8 h-72 mt-28'>
         {
@@ -62,8 +63,10 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   const ZX7Data = getBannerProps(results[3])
   const ZX9Data = getBannerProps(results[4])
 
+  const currentRoute = '/'
+
   return {
-    props: { categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }
+    props: { categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData, currentRoute }
   }
 }
 

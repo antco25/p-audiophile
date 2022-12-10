@@ -20,7 +20,7 @@ const HomeHeroBanner = ({ data, ...props }: BannerProps) => {
       </div>
       <div className='flex-1'>
         <Image src={data.imageDesktop} width={1440} height={729} alt='Product Banner' className='absolute left-1/2 -translate-x-2/4 top-0  h-[729px] object-cover -z-10' />
-        <div className='absolute bg-[#181818] w-full left-0 top-0 h-[729px] rounded-lg -z-20'></div>
+        <div className='absolute bg-[#181818] w-full left-0 top-0 h-[729px] rounded-lg -z-20' />
       </div>
     </div>
   )
