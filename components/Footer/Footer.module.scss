@@ -1,11 +1,18 @@
-.socials a {
-    @apply inline-block;
+.socials {
+    @apply flex items-center;
+
+    a {
+        @apply inline-block;
+    }
+    svg {
+        @apply block;
+    }
 }
 
 .socialLink {
     @apply inline-block;
 
     &:hover path {
-        @apply fill-orange-500;
+        @apply fill-pOrange-200;
     }
 }
