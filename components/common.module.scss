@@ -1,5 +1,5 @@
 .appWrap {
-    @apply max-w-[1100px] min-w-[375px] m-auto px-6 xs:px-8 sm:px-10 min-[1140px]:px-0  ;
+    @apply max-w-[1110px] min-w-[375px] m-auto px-6 xs:px-8 sm:px-10 min-[1140px]:px-0;
 }
 
 .navLink {
@@ -7,9 +7,25 @@
 }
 
 .newProductText {
-    @apply text-sm uppercase tracking-[.625rem]
+    @apply text-sm uppercase tracking-[.625rem];
 }
 
 .buttonLinkOne {
-    @apply uppercase font-bold bg-pOrange-200 hover:bg-pOrange-100 py-4 px-7 text-sm
+    @apply uppercase font-bold bg-pOrange-200 hover:bg-pOrange-100 py-4 px-7 text-sm;
+}
+
+.buttonLinkTwo {
+    @apply uppercase border border-black hover:bg-black hover:text-white py-4 px-8 text-sm leading-[1rem];
+}
+
+.buttonLinkThree {
+    @apply uppercase bg-black hover:bg-[#4c4c4c] py-4 px-8 text-sm leading-[1rem];
+}
+
+.headerOne {
+    @apply uppercase font-bold text-[1.75rem] xsm:text-[2.5rem] leading-[2.375rem] xsm:leading-[2.75rem] ;
+}
+
+.headerTwo {
+    @apply uppercase font-bold text-[1.75rem] leading-[2.375rem];
 }

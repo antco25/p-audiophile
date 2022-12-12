@@ -40,10 +40,10 @@ const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: H
           })
         }
       </div>
-      <ZX9BannerCard className='mt-40' data={ZX9Data.data} />
-      <ZX7BannerCard className='mt-12' data={ZX7Data.data} />
-      <YX1BannerCard className='mt-12' data={YX1Data.data} />
-      <InfoBannerCard className='my-48' data={InfoData.data} />
+      <ZX9BannerCard className='mt-[120px] xs:mt-24 lg:mt-[168px]' data={ZX9Data.data} />
+      <ZX7BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={ZX7Data.data} />
+      <YX1BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={YX1Data.data} />
+      <InfoBannerCard className='my-[120px] xs:my-24 lg:my-[200px]' data={InfoData.data} />
     </div>
   )
 }
