@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
-import { BannerProps, CategoryCard, getBannerProps, InfoBannerCard, ProductCard, RecommendCard } from '../../components';
+import { BannerProps, CategoryCards, getBannerProps, InfoBannerCard, ProductCard, RecommendCard } from '../../components';
 import { client, formatCategories, formatProduct, formatRecommendations, Product, Recommendation } from '../../lib';
 import { CommonPageProps } from '..';
 import { useStateContext } from '../../context/ContextWrap';
@@ -69,13 +69,7 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
           })
         }
       </div>
-      <div className='flex gap-x-8 h-72 mb-[160px]'>
-        {
-          categories.map((category, index) => {
-            return <CategoryCard key={index} category={category.name} thumbnail={category.image} className='flex-1' />
-          })
-        }
-      </div>
+      <CategoryCards categories={categories} className='mb-[160px]' />
       <InfoBannerCard className='mb-[160px]' data={InfoData.data} />
     </div>
   )

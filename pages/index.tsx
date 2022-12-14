@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { BannerProps, CategoryCard, getBannerProps, HomeHeroBanner, InfoBannerCard, YX1BannerCard, ZX7BannerCard, ZX9BannerCard } from '../components';
+import { BannerProps, CategoryCards, getBannerProps, HomeHeroBanner, InfoBannerCard, YX1BannerCard, ZX7BannerCard, ZX9BannerCard } from '../components';
 import { Categories, client, formatCategories } from '../lib';
 import { useStateContext } from '../context/ContextWrap';
 import common from '../components/common.module.scss';
@@ -33,13 +33,7 @@ const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: H
     <div className={common.appWrap}>
       <hr className={`$border-white opacity-20`} />
       <HomeHeroBanner data={XX99IIData.data} />
-      <div className='flex gap-x-8 h-72 mt-28'>
-        {
-          categories.map((category, index) => {
-            return <CategoryCard key={index} category={category.name} thumbnail={category.image} className='flex-1' />
-          })
-        }
-      </div>
+      <CategoryCards categories={categories} className='mt-28' />
       <ZX9BannerCard className='mt-[120px] xs:mt-24 lg:mt-[168px]' data={ZX9Data.data} />
       <ZX7BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={ZX7Data.data} />
       <YX1BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={YX1Data.data} />

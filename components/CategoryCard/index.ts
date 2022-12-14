@@ -1,1 +1,1 @@
-export { default } from './CategoryCard'
+export { default, CategoryCards } from './CategoryCard'

@@ -1,7 +1,7 @@
 export { default as Navbar } from './Navbar';
 export { default as Footer } from './Footer';
 export { default as Layout } from './Layout';
-export { default as CategoryCard } from './CategoryCard';
+export { default as CategoryCard, CategoryCards } from './CategoryCard';
 export { InfoBannerCard, ZX7BannerCard, ZX9BannerCard, YX1BannerCard, getBannerProps } from './BannerCard';
 export type { BannerProps } from './BannerCard';
 export { default as HomeHeroBanner } from './HomeHeroBanner';

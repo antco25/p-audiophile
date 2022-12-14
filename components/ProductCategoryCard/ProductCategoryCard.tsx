@@ -18,7 +18,7 @@ const ProductCategoryCard = ({ data, reverse, ...props }: ProductCategoryCardPro
             </div>
             <div className='flex-1 flex flex-col justify-center items-start'>
                 <div className={`${reverse ? 'mr-[105px]' : 'ml-[105px]'}`}>
-                    {data.newProduct ? <p className={`${commonStyles.newProductText} text-orange-400 mb-4 `}>New Product</p> : null}
+                    {data.newProduct ? <p className={`${commonStyles.headerThree} text-orange-400 mb-4 `}>New Product</p> : null}
                     <h1 className='uppercase font-bold text-4xl mb-8'>{data.name}<br />{data.category}</h1>
                     <p className='mb-10 opacity-50 font-medium'>{data.description}</p>
                     <Link href={`/products/${data.slug}`} className={`${commonStyles.buttonLinkOne} inline-block text-white`} >See Product</Link>

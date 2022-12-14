@@ -6,12 +6,8 @@
     @apply uppercase font-bold text-sm hover:text-pOrange-200;
 }
 
-.newProductText {
-    @apply text-sm uppercase tracking-[.625rem];
-}
-
 .buttonLinkOne {
-    @apply uppercase font-bold bg-pOrange-200 hover:bg-pOrange-100 py-4 px-7 text-sm;
+    @apply uppercase bg-pOrange-200 hover:bg-pOrange-100 py-4 px-7 text-sm leading-[1rem];
 }
 
 .buttonLinkTwo {
@@ -28,4 +24,8 @@
 
 .headerTwo {
     @apply uppercase font-bold text-[1.75rem] leading-[2.375rem];
+}
+
+.headerThree {
+    @apply uppercase font-normal text-[0.875rem] leading-[19px] tracking-[.625rem];
 }

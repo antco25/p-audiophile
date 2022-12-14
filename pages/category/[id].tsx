@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { GetServerSideProps } from 'next';
-import { BannerProps, CategoryCard, getBannerProps, InfoBannerCard, ProductCategoryCard } from '../../components';
+import { BannerProps, CategoryCards, getBannerProps, InfoBannerCard, ProductCategoryCard } from '../../components';
 import { CategoryProduct, client, formatCategories, formatCategoryProducts } from '../../lib';
 import { CommonPageProps } from '..';
 import { useStateContext } from '../../context/ContextWrap';
@@ -31,13 +31,7 @@ const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: C
             return <ProductCategoryCard key={index} data={product} className='mb-[160px]' reverse={index % 2 !== 0} />
           })
         }
-        <div className='flex gap-x-8 h-72 mb-[160px]'>
-          {
-            categories.map((category, index) => {
-              return <CategoryCard key={index} category={category.name} thumbnail={category.image} className='flex-1' />
-            })
-          }
-        </div>
+        <CategoryCards categories={categories} className='mb-[160px]' />
         <InfoBannerCard className='mb-[160px]' data={InfoData.data} />
       </div>
     </div>
