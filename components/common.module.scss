@@ -29,3 +29,7 @@
 .headerThree {
     @apply uppercase font-normal text-[0.875rem] leading-[19px] tracking-[.625rem];
 }
+
+.headerFour {
+    @apply uppercase font-bold text-2xl xsm:text-[2rem] leading-[36px];
+}

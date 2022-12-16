@@ -1,22 +1,24 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Recommendation } from '../../lib';
+import { ScreenSize } from '../../pages/_app';
 import commonStyles from '../common.module.scss';
 
 interface RecommendCardProps extends React.HTMLAttributes<HTMLDivElement> {
-    data: Recommendation
+    data: Recommendation,
+    screenSize: ScreenSize
 }
 
 //TODO: Media query
-const RecommendCard = ({ data, ...props }: RecommendCardProps) => {
-    const imageSize = 0;
-
+const RecommendCard = ({ data, screenSize, ...props }: RecommendCardProps) => {
     return (
-        <div {...props} className={`${props.className ? props.className + ' ' : ''}flex flex-col justify-center items-center`}>
-            <Image className='mb-10' src={data.recommendImage[imageSize]} width={500} height={500} alt='product thumbnail' />
-            <h1 className='uppercase font-bold text-2xl text-center mb-8'>{data.name}</h1>
-            <Link href={`/products/${data.slug}`} className={`${commonStyles.buttonLinkOne} inline-block text-white`} >See Product</Link>
+        <div {...props}>
+            <div className='flex flex-col justify-center items-center'>
+                <img src={data.recommendImage[screenSize]} alt='product thumbnail'
+                    className='object-cover w-full h-[120px] xsm:h-[318px] mb-8 xsm:mb-10' />
+                <h1 className='uppercase font-bold text-2xl leading-[33px] text-center mb-8'>{data.name}</h1>
+                <Link href={`/products/${data.slug}`} className={`${commonStyles.buttonLinkOne} inline-block text-white`} >See Product</Link>
+            </div>
         </div>
     )
 }

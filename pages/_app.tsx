@@ -12,3 +12,11 @@ export default function App({ Component, pageProps }: AppProps) {
     </ContextWrap>
   )
 }
+
+//TODO: Determine screen size from page, not individual components ?
+//export type ScreenSize = 'desktop' | 'tablet' | 'mobile'
+export enum ScreenSize {
+  'DESKTOP',
+  'TABLET',
+  'MOBILE'
+}

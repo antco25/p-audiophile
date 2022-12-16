@@ -9,7 +9,6 @@ interface ProductCategoryCardProps extends React.HTMLAttributes<HTMLDivElement> 
     reverse?: boolean,
 }
 
-//TODO: Media query for image source
 const ProductCategoryCard = ({ data, reverse, ...props }: ProductCategoryCardProps) => {
 
     const [loaded, setLoaded] = useState(false);
