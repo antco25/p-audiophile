@@ -178,7 +178,7 @@ const Checkout = () => {
             </div>
             <div className='flex items-center mb-8'>
               <span className='flex-1 uppercase opacity-50 font-medium'>Grand Total</span>
-              <span className='text-lg font-bold text-orange-500'>$ {(totalPrice + shippingPrice).toLocaleString()}</span>
+              <span className='text-lg font-bold text-pOrange-200'>$ {(totalPrice + shippingPrice).toLocaleString()}</span>
             </div>
             <button className={`${commonStyles.buttonLinkOne} text-white text-center block w-full`} onClick={handleSubmit}>Continue & Pay</button>
           </div>

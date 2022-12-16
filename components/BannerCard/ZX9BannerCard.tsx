@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image';
 import Link from 'next/link';
 import { PatternCircles } from '../Icons';
 import { getRichText } from '../../lib';
@@ -27,7 +26,7 @@ const ZX9BannerCard = ({ data, ...props }: BannerProps) => {
             className={`absolute -top-[121px] xsm:-top-[288px] lg:-top-[36px] right-2/4 lg:-right-[240px] translate-x-2/4 lg:translate-x-0 
             w-[558px] xsm:w-[944px] h-[558px] xsm:h-[944px]`} />
           {
-            !loaded ? null :
+            loaded &&
               <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
                 alt='Product Banner'
                 className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 

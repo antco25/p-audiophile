@@ -1,5 +1,5 @@
 .subHeader {
-    @apply uppercase font-bold text-orange-500 mb-4;
+    @apply uppercase font-bold text-pOrange-200 mb-4;
 }
 
 .label {
@@ -11,7 +11,7 @@
 }
 
 .input {
-    @apply px-6 py-4 border rounded-lg text-sm font-bold hover:border-orange-500 focus:border-orange-500 outline-none;
+    @apply px-6 py-4 border rounded-lg text-sm font-bold hover:border-pOrange-200 focus:border-pOrange-200 outline-none;
 
     &.error {
         @apply border-red-700;
@@ -22,7 +22,7 @@
     @apply flex relative;
 
     &:hover .labelRadio {
-        @apply border-orange-500;
+        @apply border-pOrange-200;
     }
 }
 
@@ -36,10 +36,10 @@
     }
 
     &.activeRadio {
-        @apply border-orange-500;
+        @apply border-pOrange-200;
 
         &:after {
-            @apply bg-orange-500;
+            @apply bg-pOrange-200;
         }
     }
 }

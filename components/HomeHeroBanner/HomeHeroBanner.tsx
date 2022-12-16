@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive';
@@ -21,7 +20,7 @@ const HomeHeroBanner = ({ data, ...props }: BannerProps) => {
   })
 
   return (
-    <div className={`${props.className ? props.className + ' ' : ''}text-white flex h-[510px] xs:h-[640px] lg:h-[632px]`}>
+    <div className={`${props.className ? props.className + ' ' : ''}text-white flex h-[509px] xs:h-[638px] lg:h-[632px]`}>
       <div className='flex-1'>
         <div className={`flex flex-col h-full justify-center items-center lg:items-start 
         w-80 xsm:w-96 lg:w-auto mx-auto lg:mx-0 text-center lg:text-left`}>
@@ -33,7 +32,7 @@ const HomeHeroBanner = ({ data, ...props }: BannerProps) => {
       </div>
       <div className='flex-0 lg:flex-1'>
         {
-          !loaded ? null :
+          loaded &&
             <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
               alt='Product Banner' className='absolute object-cover left-1/2 -translate-x-2/4 top-0 h-[600px] xs:h-[729px] -z-10' />
         }

@@ -21,14 +21,14 @@ const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: C
 
   return (
     <div>
-      <div className='bg-black mb-[160px] '>
+      <div className='bg-black mb-[64px] xsm:mb-[120px] lg:mb-[160px] '>
         <hr className={`${commonStyles.appWrap} border-white opacity-20`} />
-        <div className='text-white py-24 uppercase text-center font-bold text-4xl'>{category}</div>
+        <div className={`${commonStyles.headerOne} h-[101px] xsm:h-[239px] p-8 xsm:pt-24 text-white text-center`}>{category}</div>
       </div>
       <div className={commonStyles.appWrap}>
         {
           categoryProducts.map((product, index) => {
-            return <ProductCategoryCard key={index} data={product} className='mb-[160px]' reverse={index % 2 !== 0} />
+            return <ProductCategoryCard key={index} data={product} className='mb-[120px] lg:mb-[160px]' reverse={index % 2 !== 0} />
           })
         }
         <CategoryCards categories={categories} className='mb-[160px]' />

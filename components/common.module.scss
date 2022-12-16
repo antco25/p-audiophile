@@ -1,13 +1,13 @@
 .appWrap {
-    @apply max-w-[1110px] min-w-[375px] m-auto px-6 xs:px-8 sm:px-10 min-[1160px]:px-0;
+    @apply max-w-[1110px] m-auto px-6 xs:px-8 sm:px-10 min-[1160px]:px-0;
 }
 
 .navLink {
-    @apply uppercase font-bold text-sm hover:text-pOrange-200;
+    @apply uppercase text-sm hover:text-pOrange-200;
 }
 
 .buttonLinkOne {
-    @apply uppercase bg-pOrange-200 hover:bg-pOrange-100 py-4 px-7 text-sm leading-[1rem];
+    @apply uppercase bg-pOrange-200 hover:bg-pOrange-100 py-4 px-8 text-sm leading-[1rem];
 }
 
 .buttonLinkTwo {

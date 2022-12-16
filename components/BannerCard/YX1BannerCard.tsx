@@ -21,7 +21,7 @@ const YX1BannerCard = ({ data, ...props }: BannerProps) => {
     <div className={`${props.className ? props.className + ' ' : ''}text-black flex flex-col xsm:h-[320px] xsm:flex-row gap-6 xsm:gap-3 lg:gap-[30px]`}>
       <div className='flex-1'>
         {
-          !loaded ? null :
+          loaded &&
             <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
               alt='Product Banner' className='w-full h-[200px] xsm:h-full object-cover rounded-lg' />
         }

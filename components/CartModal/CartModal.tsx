@@ -40,7 +40,7 @@ const CartModal = () => {
         <div className='absolute right-0 top-[130px] bg-white rounded-lg w-[377px] p-8' onClick={(e) => { e.stopPropagation() }}>
           <div className='flex mb-8'>
             <h1 className='flex-1 uppercase font-bold text-lg'>Cart ({cartItems.length})</h1>
-            <button className={`underline opacity-50 hover:text-orange-500 font-medium${cartItems.length === 0 ? ' invisible' : ''}`} onClick={() => removeAllCart()}>Remove all</button>
+            <button className={`underline opacity-50 hover:text-pOrange-200 font-medium${cartItems.length === 0 ? ' invisible' : ''}`} onClick={() => removeAllCart()}>Remove all</button>
           </div>
           <div className='mb-8 h-[240px] overflow-auto'>
             {
@@ -59,7 +59,7 @@ const CartModal = () => {
                       </Link>
                       <QuantityCounter initialQuantity={cartItem.quantity} className='w-24 h-8'
                         onQuantityChange={(quantity) => updateCartItem(cartItem, quantity)} />
-                      <Cross className='absolute w-[10px] h-[10px] right-0 top-0 cursor-pointer group' fillClass='group-hover:fill-orange-500' onClick={() => removeFromCart(cartItem)} />
+                      <Cross className='absolute w-[10px] h-[10px] right-0 top-0 cursor-pointer group' fillClass='group-hover:fill-pOrange-200' onClick={() => removeFromCart(cartItem)} />
                     </div>
                   )
                 })

@@ -24,7 +24,7 @@ const ZX7BannerCard = ({ data, ...props }: BannerProps) => {
         <Link href={`/products/${data.productSlug}`} className={`${common.buttonLinkTwo}`}>See Product</Link>
       </div>
       {
-        !loaded ? null :
+        loaded &&
           <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
             alt='Product Banner' className='absolute top-0 block w-full h-full object-cover rounded-lg -z-10' />
       }

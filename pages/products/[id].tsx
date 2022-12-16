@@ -45,7 +45,7 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
             {product.boxItems.map((item, index) => {
               return (
                 <li key={index}>
-                  <span className='text-orange-600 mr-6'>{item.quantity}x</span>
+                  <span className='text-pOrange-200 mr-6'>{item.quantity}x</span>
                   <span className='opacity-50 font-medium'>{item.name}</span>
                 </li>
               )

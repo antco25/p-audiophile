@@ -6,7 +6,7 @@ import common from '../common.module.scss';
 
 const InfoBannerCard = ({ data, ...props }: BannerProps) => {
 
-  const header = getRichText(data.header, 'text-orange-400');
+  const header = getRichText(data.header, 'text-pOrange-200');
   const description = getRichText(data.description);
 
   const [loaded, setLoaded] = useState(false);
@@ -26,7 +26,7 @@ const InfoBannerCard = ({ data, ...props }: BannerProps) => {
       </div>
       <div className='lg:flex-1 lg:order-2 h-[300px] lg:h-[588px] '>
         {
-          !loaded ? null :
+          loaded &&
             <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
               alt='Product Banner' className='block w-full h-full object-cover rounded-lg' />
         }
