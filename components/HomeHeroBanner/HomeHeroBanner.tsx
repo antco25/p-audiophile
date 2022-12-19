@@ -2,10 +2,10 @@ import Link from 'next/link';
 import React from 'react'
 import { getRichText } from '../../lib';
 import { ScreenSize } from '../../pages/_app';
-import { BannerProps } from '../BannerCard';
+import { BannerPageProps } from '../BannerCard/BannerProps';
 import common from '../common.module.scss';
 
-const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerProps) => {
+const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerPageProps) => {
 
   const header = getRichText(data.header);
   const description = getRichText(data.description);

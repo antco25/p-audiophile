@@ -22,8 +22,10 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
 
   const [loaded, setLoaded] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 576 })
-  const screenSize = (isDesktop ? ScreenSize.DESKTOP : isTablet ? ScreenSize.TABLET : ScreenSize.MOBILE);
+  const isLargeTablet = useMediaQuery({ minWidth: 576 })
+  const isTablet = useMediaQuery({ minWidth: 376 })
+  const screenSizeA = (isDesktop ? ScreenSize.DESKTOP : isLargeTablet ? ScreenSize.TABLET : ScreenSize.MOBILE);
+  const screenSizeB = (isDesktop ? ScreenSize.DESKTOP : isTablet ? ScreenSize.TABLET : ScreenSize.MOBILE);
 
   useEffect(() => {
     setLoaded(true)
@@ -39,7 +41,7 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
         className='inline-block mt-4 xsm:mt-8 lg:mt-20 mb-6 lg:mb-14 text-base opacity-50 hover:underline'>Go back</Link>
         {
           loaded &&
-          <ProductCard data={product} screenSize={screenSize} className='mb-[88px] xsm:mb-[120px] lg:mb-[160px]' />
+          <ProductCard data={product} screenSize={screenSizeA} className='mb-[88px] xsm:mb-[120px] lg:mb-[160px]' />
         }
       <div className='flex justify-between flex-col lg:flex-row gap-[88px] xsm:gap-[120px] lg:gap-0 mb-[88px] xsm:mb-[120px] lg:mb-[160px]'>
         <div className='lg:w-[650px]'>
@@ -69,13 +71,13 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
         <div className='flex flex-col xsm:flex-row gap-5 xsm:gap-[18px] lg:gap-[30px] mb-[120px] lg:mb-[160px]'>
           <div className='flex flex-col gap-5 lg:gap-8 xsm:w-[40%] lg:w-auto'>
             <img className='object-cover rounded-lg h-[174px] lg:h-[280px] '
-              src={product.gallerySmallOne[screenSize]} alt='Gallery small top' />
+              src={product.gallerySmallOne[screenSizeA]} alt='Gallery small top' />
             <img className='object-cover rounded-lg h-[174px] lg:h-[280px]'
-              src={product.gallerySmallTwo[screenSize]} alt='Gallery small bottom' />
+              src={product.gallerySmallTwo[screenSizeA]} alt='Gallery small bottom' />
           </div>
           <div className='flex-1 lg:flex-auto'>
             <img className='object-cover rounded-lg w-full h-[368px] lg:h-[592px]'
-              src={product.galleryLarge[screenSize]} alt='Gallery large' />
+              src={product.galleryLarge[screenSizeA]} alt='Gallery large' />
           </div>
         </div>
       }
@@ -84,12 +86,12 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
         {
           loaded &&
           recommendations.map((r, index) => {
-            return <RecommendCard className='flex-1' key={index} data={r} screenSize={screenSize} />
+            return <RecommendCard className='flex-1' key={index} data={r} screenSize={screenSizeA} />
           })
         }
       </div>
       <CategoryCards categories={categories} className='mb-[120px] lg:mb-[160px]' />
-      <InfoBannerCard className='mb-[120px] lg:mb-[160px]' data={InfoData.data} />
+      <InfoBannerCard className='mb-[120px] lg:mb-[160px]' data={InfoData.data} screenSize={screenSizeB} loaded={loaded} />
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import { getRichText } from '../../lib';
-import BannerProps from './BannerProps';
+import { BannerPageProps } from './BannerProps';
 import common from '../common.module.scss';
 import { ScreenSize } from '../../pages/_app';
 
-const InfoBannerCard = ({ data, loaded, screenSize, ...props }: BannerProps) => {
+const InfoBannerCard = ({ data, loaded, screenSize, ...props }: BannerPageProps) => {
 
   const header = getRichText(data.header, 'text-pOrange-200');
   const description = getRichText(data.description);

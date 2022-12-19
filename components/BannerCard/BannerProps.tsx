@@ -9,7 +9,10 @@ export default interface BannerProps extends React.HTMLAttributes<HTMLDivElement
     imageDesktop: string,
     imageTablet: string,
     imageMobile: string,
-  },
+  }
+}
+
+export interface BannerPageProps extends BannerProps {
   screenSize: ScreenSize,
   loaded: boolean
 }

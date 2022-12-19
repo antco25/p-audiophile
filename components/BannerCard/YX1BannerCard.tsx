@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import React from 'react'
 import { getRichText } from '../../lib';
-import BannerProps from './BannerProps';
+import { BannerPageProps } from './BannerProps';
 import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 
-const YX1BannerCard = ({ data, screenSize, loaded, ...props }: BannerProps) => {
+const YX1BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) => {
 
   const header = getRichText(data.header);
   const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile

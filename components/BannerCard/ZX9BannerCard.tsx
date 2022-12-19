@@ -2,11 +2,11 @@ import React from 'react'
 import Link from 'next/link';
 import { PatternCircles } from '../Icons';
 import { getRichText } from '../../lib';
-import BannerProps from './BannerProps';
+import { BannerPageProps } from './BannerProps';
 import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 
-const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerProps) => {
+const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) => {
   const header = getRichText(data.header);
   const description = getRichText(data.description);
   const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
