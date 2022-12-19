@@ -55,7 +55,9 @@ export const getServerSideProps: GetServerSideProps<CategoryDetailProps> = async
   const infoQuery = `*[_type == "banner" && name == "Info"][0] | { ..., product->{slug} }`;
   const InfoData = getBannerProps(await client.fetch(infoQuery))
 
+  const currentRoute = categoryProducts[0].category.charAt(0).toUpperCase() + categoryProducts[0].category.slice(1);
+
   return {
-    props: { category, categories, categoryProducts, InfoData }
+    props: { category, categories, categoryProducts, InfoData, currentRoute }
   }
 }

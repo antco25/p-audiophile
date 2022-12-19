@@ -19,7 +19,6 @@ export default function App({ Component, pageProps }: AppProps) {
  * TODO:
 1. change screen size at page level not component level
 2. Colors, slate
-3. Change page title depending on page
  */
 export enum ScreenSize {
   'DESKTOP',

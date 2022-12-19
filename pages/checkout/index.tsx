@@ -198,7 +198,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const categoryQuery = `*[_type == "category"] | order(order)`;
   const categories = formatCategories(await client.fetch(categoryQuery));
 
+  const currentRoute = 'Checkout'
+
   return {
-    props: { categories }
+    props: { categories, currentRoute }
   }
 }
