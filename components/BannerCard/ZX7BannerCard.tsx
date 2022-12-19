@@ -10,18 +10,21 @@ const ZX7BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) 
   const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
-    <div className={`${props.className ? props.className + ' ' : ''}text-black h-80 relative`}>
+    <Link href={`/products/${data.productSlug}`}
+      className={`${props.className ? props.className + ' ' : ''}block text-black h-80 group relative`}>
       <div className='flex flex-col justify-center items-start h-full ml-6 xs:ml-12 xsm:ml-24 lg:ml-32 '>
         <h1 className={`${common.headerTwo} mb-8`}>{header}</h1>
-        <Link href={`/products/${data.productSlug}`} className={`${common.buttonLinkTwo}`}>See Product</Link>
+        <button className={`${common.buttonLinkTwo}`}>See Product</button>
       </div>
-      {
-        loaded &&
-        <img src={image}
-          alt='Product Banner' className='absolute top-0 block w-full h-full object-cover rounded-lg -z-10' />
-      }
+      <div className='absolute top-0 block w-full h-full -z-10 rounded-lg overflow-hidden'>
+        {
+          loaded &&
+          <img src={image}
+            alt='Product Banner' className='object-cover w-full h-full group-hover:scale-102 transition-transform' />
+        }
+      </div>
 
-    </div>
+    </Link>
   )
 }
 

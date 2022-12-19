@@ -12,7 +12,7 @@ const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) 
   const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
-    <div className={`${props.className ? props.className + ' ' : ''}text-white h-[600px] xsm:h-[720px] lg:h-[560px]`}>
+    <Link href={`/products/${data.productSlug}`} className={`${props.className ? props.className + ' ' : ''}block group text-white h-[600px] xsm:h-[720px] lg:h-[560px]`}>
       <div className='bg-pOrange-200 h-full overflow-hidden rounded-lg flex flex-col lg:flex-row relative'>
         <div className='relative flex-1'>
           <PatternCircles
@@ -23,7 +23,7 @@ const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) 
             <img src={image}
               alt='Product Banner'
               className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
-                w-[170px] xsm:w-[200px] lg:w-[23rem]`} />
+                w-[170px] xsm:w-[200px] lg:w-[23rem] group-hover:scale-102 transition-transform`} />
           }
         </div>
         <div className='flex-1'>
@@ -31,11 +31,11 @@ const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) 
           px-6 pb-14 xsm:pb-16 lg:p-0`}>
             <h1 className='uppercase font-bold text-[2.25rem] leading-10 xsm:text-[3.5rem] xsm:leading-[3.625rem] mb-6'>{header}</h1>
             <p className='text-base xs:max-w-xs mb-6 xs:mb-10'>{description}</p>
-            <Link href={`/products/${data.productSlug}`} className={`${common.buttonLinkThree}`}>See Product</Link>
+            <button className={`${common.buttonLinkThree}`}>See Product</button>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

@@ -59,7 +59,7 @@ const Navbar = ({ categories, background }: NavbarProps) => {
         {
           loaded && !isDesktop && <button onClick={() => setShowMenu((old) => !old)}><Hamburger /></button>
         }
-        <Logo className='mx-auto xs:ml-11 lg:ml-0' />
+        <Link href='/' className='mx-auto xs:ml-11 lg:ml-0' onClick={() => setShowMenu(false)}><Logo /></Link>
         {
           loaded && isDesktop &&
           <nav className='flex justify-center absolute'>

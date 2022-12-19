@@ -41,6 +41,9 @@ module.exports = {
         },
         'pRed': '#CD2C2C',
       },
+      scale: {
+        '102' : '1.02'
+      }
     },
   },
   plugins: [],
