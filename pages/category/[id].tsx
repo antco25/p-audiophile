@@ -4,13 +4,15 @@ import { BannerProps, CategoryCards, getBannerProps, InfoBannerCard, ProductCate
 import { CategoryProduct, client, formatCategories, formatCategoryProducts } from '../../lib';
 import { CommonPageProps } from '..';
 import { useStateContext } from '../../context/ContextWrap';
-import commonStyles from '../../components/common.module.scss';
+import common from '../../components/common.module.scss';
 
 interface CategoryDetailProps extends CommonPageProps {
   category: string,
   categoryProducts: CategoryProduct[]
   InfoData: BannerProps
 }
+
+//TODO: Media query at page level
 
 const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: CategoryDetailProps) => {
   const { storeLink } = useStateContext();
@@ -22,17 +24,17 @@ const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: C
   return (
     <div>
       <div className='bg-black mb-[64px] xsm:mb-[120px] lg:mb-[160px] '>
-        <hr className={`${commonStyles.appWrap} border-white opacity-20`} />
-        <div className={`${commonStyles.headerOne} h-[101px] xsm:h-[239px] p-8 xsm:pt-24 text-white text-center`}>{category}</div>
+        <hr className={`${common.appWrap} border-white opacity-20`} />
+        <div className={`${common.headerOne} h-[101px] xsm:h-[246px] lg:h-[239px] p-8 xsm:pt-[105px] lg:pt-24 text-white text-center`}>{category}</div>
       </div>
-      <div className={commonStyles.appWrap}>
+      <div className={common.appWrap}>
         {
           categoryProducts.map((product, index) => {
             return <ProductCategoryCard key={index} data={product} className='mb-[120px] lg:mb-[160px]' reverse={index % 2 !== 0} />
           })
         }
-        <CategoryCards categories={categories} className='mb-[160px]' />
-        <InfoBannerCard className='mb-[160px]' data={InfoData.data} />
+        <CategoryCards categories={categories} className='mb-[120px] lg:mb-[160px]' />
+        <InfoBannerCard className='mb-[120px] lg:mb-[160px]' data={InfoData.data} />
       </div>
     </div>
   )

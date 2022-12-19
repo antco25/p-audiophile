@@ -10,6 +10,7 @@ interface CategoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface CategoryCardsProps extends React.HTMLAttributes<HTMLDivElement> {
     categories: Categories[],
+    handleClick?: () => void
 }
 
 const CategoryCard = ({ category, thumbnail, ...props }: CategoryCardProps) => {
@@ -31,13 +32,13 @@ const CategoryCard = ({ category, thumbnail, ...props }: CategoryCardProps) => {
     )
 }
 
-export const CategoryCards = ({ categories, ...props }: CategoryCardsProps) => {
+export const CategoryCards = ({ categories, handleClick, ...props }: CategoryCardsProps) => {
     return (
         <div {...props}>
             <div className='flex flex-col xsm:flex-row gap-4 xsm:gap-[10px] lg:gap-[30px] h-[683px] xsm:h-[217px] lg:h-[284px]'>
                 {
                     categories.map((category, index) => {
-                        return <CategoryCard key={index} category={category.name} thumbnail={category.image} className='flex-1' />
+                        return <CategoryCard key={index} category={category.name} thumbnail={category.image} onClick={() => handleClick?.()} className='flex-1' />
                     })
                 }
             </div>

@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/ContextWrap';
-import commonStyles from '../common.module.scss';
+import { ScreenSize } from '../../pages/_app';
+import common from '../common.module.scss';
 import QuantityCounter from '../QuantityCounter';
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,10 +16,10 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
         id: string,
         slug: string,
     },
+    screenSize: ScreenSize
 }
 
-//TODO: Media query for image
-const ProductCard = ({ data, ...props }: ProductCardProps) => {
+const ProductCard = ({ data, screenSize, ...props }: ProductCardProps) => {
     const { setShowCart, addToCart } = useStateContext();
     const [quantity, setQuantity] = useState(1);
 
@@ -47,19 +47,20 @@ const ProductCard = ({ data, ...props }: ProductCardProps) => {
     }
 
     return (
-        <div className={`${props.className ? props.className + ' ' : ''}flex gap-x-[20px]`}>
+        <div className={`${props.className ? props.className + ' ' : ''}flex flex-col xsm:flex-row gap-8 xsm:gap-6 lg:gap-[30px]`}>
             <div className='flex-1'>
-                <Image src={data.image[0]} width={500} height={500} alt='Product image' className='rounded-lg' />
+                <img src={data.image[screenSize]} alt='Product image' 
+                className='rounded-lg object-cover w-full pr-0 min-[680px]:pr-11 min-[800px]:pr-0 h-[327px] xsm:h-[480px] lg:h-[560px]' />
             </div>
-            <div className='flex-1 flex flex-col justify-center items-start'>
-                <div className='ml-[105px]'>
-                    {data.newProduct ? <p className={`${commonStyles.headerThree} text-pOrange-200 mb-4 `}>New Product</p> : null}
-                    <h1 className='uppercase font-bold text-4xl mb-8'>{data.name}<br />{data.category}</h1>
-                    <p className='mb-8 opacity-50 font-medium'>{data.description}</p>
-                    <p className='mb-12 font-bold text-lg'>$ {data.price.toLocaleString()}</p>
-                    <div className='flex gap-x-4'>
+            <div className='flex-1'>
+                <div className='flex flex-col justify-center items-start xsm:w-[300px] sm:w-[340px] lg:w-[446px] ml-auto h-full'>
+                    {data.newProduct ? <p className={`${common.headerThree} text-pOrange-200 mb-6 xsm:mb-4 `}>New Product</p> : null}
+                    <h1 className={`${common.headerFive} mb-6 xsm:mb-8`}>{data.name}<br />{data.category}</h1>
+                    <p className='text-base opacity-50 mb-6 xsm:mb-8'>{data.description}</p>
+                    <p className='font-bold text-lg leading-[1.5625rem] mb-8 xsm:mb-12'>$ {data.price.toLocaleString()}</p>
+                    <div className='flex gap-4'>
                         <QuantityCounter initialQuantity={quantity} onQuantityChange={(onQuantityChange)} />
-                        <button className={`${commonStyles.buttonLinkOne} text-white`} onClick={onAddToCart}>Add to Cart</button>
+                        <button className={`${common.buttonLinkOne} text-white`} onClick={onAddToCart}>Add to Cart</button>
                     </div>
                 </div>
             </div>

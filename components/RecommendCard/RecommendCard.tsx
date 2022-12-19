@@ -2,14 +2,13 @@ import Link from 'next/link';
 import React from 'react';
 import { Recommendation } from '../../lib';
 import { ScreenSize } from '../../pages/_app';
-import commonStyles from '../common.module.scss';
+import common from '../common.module.scss';
 
 interface RecommendCardProps extends React.HTMLAttributes<HTMLDivElement> {
     data: Recommendation,
     screenSize: ScreenSize
 }
 
-//TODO: Media query
 const RecommendCard = ({ data, screenSize, ...props }: RecommendCardProps) => {
     return (
         <div {...props}>
@@ -17,7 +16,7 @@ const RecommendCard = ({ data, screenSize, ...props }: RecommendCardProps) => {
                 <img src={data.recommendImage[screenSize]} alt='product thumbnail'
                     className='object-cover w-full h-[120px] xsm:h-[318px] mb-8 xsm:mb-10' />
                 <h1 className='uppercase font-bold text-2xl leading-[33px] text-center mb-8'>{data.name}</h1>
-                <Link href={`/products/${data.slug}`} className={`${commonStyles.buttonLinkOne} inline-block text-white`} >See Product</Link>
+                <Link href={`/products/${data.slug}`} className={`${common.buttonLinkOne} inline-block text-white`} >See Product</Link>
             </div>
         </div>
     )

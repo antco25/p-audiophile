@@ -7,6 +7,8 @@ interface ContextWrapProps {
 interface ContextType {
   showCart: boolean,
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>,
+  showMenu: boolean,
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>,
   cartItems: CartItem[],
   addToCart: (item: CartItem) => void,
   removeFromCart: (item: CartItem) => void,
@@ -33,6 +35,7 @@ const Context = createContext({} as ContextType);
 
 export const ContextWrap: React.FC<ContextWrapProps> = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItem[]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [linkHistory, setLinkHistory] = useState(['/']);
@@ -130,6 +133,8 @@ export const ContextWrap: React.FC<ContextWrapProps> = ({ children }) => {
       value={{
         showCart,
         setShowCart,
+        showMenu,
+        setShowMenu,
         cartItems,
         addToCart,
         removeFromCart,

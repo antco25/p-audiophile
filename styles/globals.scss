@@ -10,10 +10,8 @@ body {
   min-width: 375px;
 }
 
-@media only screen and (max-width: 375px) {
-  body {
-    position: relative;
-  }
+body {
+  position: relative;
 }
 
 * {

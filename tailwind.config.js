@@ -37,7 +37,9 @@ module.exports = {
         'pLight': {
           100: '#FAFAFA',
           200: '#F1F1F1',
+          300: '#CFCFCF',
         },
+        'pRed': '#CD2C2C',
       },
     },
   },

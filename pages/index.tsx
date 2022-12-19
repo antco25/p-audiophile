@@ -17,6 +17,7 @@ interface HomeProps extends CommonPageProps {
   InfoData: BannerProps,
 }
 
+//TODO: Media query at page level
 const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
   const { resetCart, setResetCart, removeAllCart, storeLink } = useStateContext();
 

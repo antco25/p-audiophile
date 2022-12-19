@@ -19,17 +19,36 @@
 }
 
 .headerOne {
-    @apply uppercase font-bold text-[1.75rem] xsm:text-[2.5rem] leading-[2.375rem] xsm:leading-[2.75rem] ;
+    //28px:38px -> 40px:44px
+    @apply uppercase font-bold text-[1.75rem] xsm:text-[2.5rem] leading-[2.375rem] xsm:leading-[2.75rem];
 }
 
 .headerTwo {
+    //28px:38px
     @apply uppercase font-bold text-[1.75rem] leading-[2.375rem];
 }
 
 .headerThree {
+    //14px:19px
     @apply uppercase font-normal text-[0.875rem] leading-[19px] tracking-[.625rem];
 }
 
 .headerFour {
-    @apply uppercase font-bold text-2xl xsm:text-[2rem] leading-[36px];
+    //24px:36px -> 32px:36px
+    @apply uppercase font-bold text-2xl xsm:text-[2rem] leading-9;
+}
+
+.headerFive {
+    //28px:38px -> 28px:32px -> 40px:44px
+    @apply uppercase font-bold text-[1.75rem] lg:text-[2.5rem] leading-[2.375rem] xsm:leading-8 lg:leading-[2.75rem];
+}
+
+.headerSix {
+    //28px:38px -> 28px:32px -> 40px:44px
+    @apply uppercase font-bold text-[1.75rem] lg:text-[2.5rem] leading-[2.375rem] xsm:leading-8 lg:leading-[2.75rem];
+}
+
+.cartPrice {
+    //14px:25px
+    @apply uppercase font-bold text-[0.875rem] leading-[1.5625rem];
 }

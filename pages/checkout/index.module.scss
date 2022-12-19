@@ -1,20 +1,20 @@
 .subHeader {
-    @apply uppercase font-bold text-pOrange-200 mb-4;
+    @apply uppercase text-sm text-pOrange-200 mb-4;
 }
 
 .label {
     @apply font-bold text-xs mb-[9px];
 
     &.error {
-        @apply text-red-700
+        @apply text-pRed
     }
 }
 
 .input {
-    @apply px-6 py-4 border rounded-lg text-sm font-bold hover:border-pOrange-200 focus:border-pOrange-200 outline-none;
+    @apply px-6 py-[17px] border border-pLight-300 rounded-lg text-[0.875rem] leading-5 font-bold hover:border-pOrange-200 focus:border-pOrange-200 outline-none;
 
     &.error {
-        @apply border-red-700;
+        @apply border-pRed;
     }
 }
 
@@ -27,12 +27,12 @@
 }
 
 .labelRadio {
-    @apply font-bold text-sm inline-block flex-1 pl-[52px] pr-6 py-4 border rounded-lg cursor-pointer;
+    @apply inline-block text-[0.875rem] leading-5 font-bold flex-1 pl-[52px] pr-6 py-[17px] border border-pLight-300 rounded-lg cursor-pointer;
 
     &:after {
-        @apply absolute left-4 border-solid border-4 border-slate-100 bg-transparent w-[18px] h-[18px] rounded-3xl;
+        @apply absolute left-4 border-solid border-4 border-white w-[20px] h-[20px] rounded-full;
         content: "";
-        box-shadow: 0 0 0 2px #e5e7eb;
+        box-shadow: 0 0 0 2px #CFCFCF;
     }
 
     &.activeRadio {

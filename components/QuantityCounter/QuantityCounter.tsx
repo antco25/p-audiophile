@@ -34,9 +34,9 @@ const QuantityCounter = ({ initialQuantity, onQuantityChange, ...props }: Quanti
 
     return (
         <div className={`${props.className ? props.className + ' ' : ''} flex items-center font-bold text-center text-sm leading-[18px] bg-slate-100`}>
-            <button className='opacity-50 box-content w-4 p-4 hover:text-pOrange-200' onClick={decrement}>-</button>
+            <button className='opacity-50 box-content w-4 px-4 py-[15px] hover:text-pOrange-200' onClick={decrement}>-</button>
             <p className='self-center w-6'>{quantity}</p>
-            <button className='opacity-50 box-content w-4 p-4 hover:text-pOrange-200' onClick={increment}>+</button>
+            <button className='opacity-50 box-content w-4 px-4 py-[15px] hover:text-pOrange-200' onClick={increment}>+</button>
         </div>
     )
 }

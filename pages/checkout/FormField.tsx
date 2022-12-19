@@ -43,7 +43,7 @@ const FormField = ({ className, id, label, placeholder, inputType, length, data,
     return (
         <div className={className}>
             <label className={`${styles.label}${data.error ? ' ' + styles.error : ''}`} htmlFor={id}>{label}</label>
-            {data.error ? <span className='absolute right-0 font-medium text-xs text-red-700'>{data.errMessage}</span> : null}
+            {data.error ? <span className='absolute right-0 font-medium text-xs text-pRed'>{data.errMessage}</span> : null}
             <input className={`${styles.input}${data.error ? ' ' + styles.error : ''}`} type={inputType} name={id} placeholder={placeholder}
                 value={data.value} onInput={handleInputChange} onWheel={inputType === 'number' ? (e) => e.currentTarget.blur() : undefined}
                 pattern={inputType === 'tel' ? "[0-9]{3}[0-9]{3}[0-9]{4}|[0-9]{3}-[0-9]{3}-[0-9]{4}" : undefined}
