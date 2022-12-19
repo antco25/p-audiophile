@@ -1,29 +1,22 @@
-import { useMediaQuery } from 'react-responsive'
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { getRichText } from '../../lib';
 import BannerProps from './BannerProps';
+import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 
-const YX1BannerCard = ({ data, ...props }: BannerProps) => {
+const YX1BannerCard = ({ data, screenSize, loaded, ...props }: BannerProps) => {
 
   const header = getRichText(data.header);
-
-  const [loaded, setLoaded] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 376 })
-
-  useEffect(() => {
-    setLoaded(true)
-  })
+  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <div className={`${props.className ? props.className + ' ' : ''}text-black flex flex-col xsm:h-[320px] xsm:flex-row gap-6 xsm:gap-3 lg:gap-[30px]`}>
       <div className='flex-1'>
         {
           loaded &&
-            <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
-              alt='Product Banner' className='w-full h-[200px] xsm:h-full object-cover rounded-lg' />
+          <img src={image}
+            alt='Product Banner' className='w-full h-[200px] xsm:h-full object-cover rounded-lg' />
         }
 
       </div>

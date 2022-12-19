@@ -1,22 +1,15 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
-import { useMediaQuery } from 'react-responsive';
+import React from 'react'
 import { getRichText } from '../../lib';
+import { ScreenSize } from '../../pages/_app';
 import { BannerProps } from '../BannerCard';
 import common from '../common.module.scss';
 
-const HomeHeroBanner = ({ data, ...props }: BannerProps) => {
+const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerProps) => {
 
   const header = getRichText(data.header);
   const description = getRichText(data.description);
-
-  const [loaded, setLoaded] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 376 })
-
-  useEffect(() => {
-    setLoaded(true)
-  })
+  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <div className={`${props.className ? props.className + ' ' : ''}text-white flex h-[509px] xs:h-[638px] lg:h-[632px]`}>
@@ -32,8 +25,8 @@ const HomeHeroBanner = ({ data, ...props }: BannerProps) => {
       <div className='flex-0 lg:flex-1'>
         {
           loaded &&
-            <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
-              alt='Product Banner' className='absolute object-cover left-1/2 -translate-x-2/4 top-0 h-[600px] xs:h-[729px] -z-10' />
+          <img src={image}
+            alt='Product Banner' className='absolute object-cover left-1/2 -translate-x-2/4 top-0 h-[600px] xs:h-[729px] -z-10' />
         }
         <div className='absolute bg-[#191919] w-full left-0 top-0 h-[600px] xs:h-[729px] -z-20' />
       </div>

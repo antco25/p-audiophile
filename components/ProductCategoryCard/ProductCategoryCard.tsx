@@ -1,30 +1,24 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import React from 'react';
 import { CategoryProduct } from '../../lib';
+import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 
 interface ProductCategoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
     data: CategoryProduct,
     reverse?: boolean,
+    loaded: boolean,
+    screenSize: ScreenSize
 }
 
-const ProductCategoryCard = ({ data, reverse, ...props }: ProductCategoryCardProps) => {
-
-    const [loaded, setLoaded] = useState(false);
-    const isDesktop = useMediaQuery({ minWidth: 1024 })
-    const isTablet = useMediaQuery({ minWidth: 376 })
-
-    useEffect(() => {
-        setLoaded(true)
-    })
+const ProductCategoryCard = ({ data, reverse, loaded, screenSize, ...props }: ProductCategoryCardProps) => {
 
     return (
         <div className={`${props.className ? props.className + ' ' : ''}flex flex-col lg:flex-row gap-[32px] xsm:gap-[52px] lg:gap-[30px]`}>
             <div className={`${reverse ? 'lg:order-1 ' : ''}lg:flex-1 h-[352px] lg:h-[560px]`}>
                 {
                     loaded &&
-                    <img src={isDesktop ? data.categoryImage[0] : isTablet ? data.categoryImage[1] : data.categoryImage[2]}
+                    <img src={data.categoryImage[screenSize]}
                         alt='Product image' className='h-full object-cover rounded-lg mx-auto' />
                 }
             </div>

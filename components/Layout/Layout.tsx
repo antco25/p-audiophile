@@ -17,7 +17,7 @@ const Layout: React.FC<Props> = ({ categories, children, currentRoute }) => {
     return (
         <div className='Layout'>
             <Head>
-                <title>Audiophile{currentRoute && currentRoute !== '/' ? ' - ' + currentRoute : ''}</title>
+                <title>{`Audiophile${currentRoute && currentRoute !== '/' ? ' - ' + currentRoute : ''}`}</title>
                 <link rel="icon" href="/favicon-32x32.png" />
             </Head>
             <header>

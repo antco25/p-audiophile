@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import React from 'react'
 import { getRichText } from '../../lib';
 import BannerProps from './BannerProps';
 import common from '../common.module.scss';
+import { ScreenSize } from '../../pages/_app';
 
-const InfoBannerCard = ({ data, ...props }: BannerProps) => {
+const InfoBannerCard = ({ data, loaded, screenSize, ...props }: BannerProps) => {
 
   const header = getRichText(data.header, 'text-pOrange-200');
   const description = getRichText(data.description);
-
-  const [loaded, setLoaded] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 376 })
-
-  useEffect(() => {
-    setLoaded(true)
-  })
+  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <div className={`${props.className ? props.className + ' ' : ''}
@@ -27,8 +20,8 @@ const InfoBannerCard = ({ data, ...props }: BannerProps) => {
       <div className='lg:flex-1 lg:order-2 h-[300px] lg:h-[588px] '>
         {
           loaded &&
-            <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
-              alt='Product Banner' className='block w-full h-full object-cover rounded-lg' />
+          <img src={image}
+            alt='Product Banner' className='block w-full h-full object-cover rounded-lg' />
         }
       </div>
     </div>

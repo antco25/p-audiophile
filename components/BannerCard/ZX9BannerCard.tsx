@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link';
 import { PatternCircles } from '../Icons';
 import { getRichText } from '../../lib';
 import BannerProps from './BannerProps';
+import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
-import { useMediaQuery } from 'react-responsive';
 
-const ZX9BannerCard = ({ data, ...props }: BannerProps) => {
+const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerProps) => {
   const header = getRichText(data.header);
   const description = getRichText(data.description);
-
-  const [loaded, setLoaded] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 576 })
-
-  useEffect(() => {
-    setLoaded(true)
-  })
+  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <div className={`${props.className ? props.className + ' ' : ''}text-white h-[600px] xsm:h-[720px] lg:h-[560px]`}>
@@ -27,9 +20,9 @@ const ZX9BannerCard = ({ data, ...props }: BannerProps) => {
             w-[558px] xsm:w-[944px] h-[558px] xsm:h-[944px]`} />
           {
             loaded &&
-              <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
-                alt='Product Banner'
-                className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
+            <img src={image}
+              alt='Product Banner'
+              className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
                 w-[170px] xsm:w-[200px] lg:w-[23rem]`} />
           }
         </div>

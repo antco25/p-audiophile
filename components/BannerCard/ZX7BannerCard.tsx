@@ -1,20 +1,13 @@
 import Link from 'next/link';
-import { useMediaQuery } from 'react-responsive'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { getRichText } from '../../lib';
 import BannerProps from './BannerProps';
+import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 
-const ZX7BannerCard = ({ data, ...props }: BannerProps) => {
+const ZX7BannerCard = ({ data, screenSize, loaded, ...props }: BannerProps) => {
   const header = getRichText(data.header);
-
-  const [loaded, setLoaded] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 576 })
-
-  useEffect(() => {
-    setLoaded(true)
-  })
+  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <div className={`${props.className ? props.className + ' ' : ''}text-black h-80 relative`}>
@@ -24,8 +17,8 @@ const ZX7BannerCard = ({ data, ...props }: BannerProps) => {
       </div>
       {
         loaded &&
-          <img src={isDesktop ? data.imageDesktop : isTablet ? data.imageTablet : data.imageMobile}
-            alt='Product Banner' className='absolute top-0 block w-full h-full object-cover rounded-lg -z-10' />
+        <img src={image}
+          alt='Product Banner' className='absolute top-0 block w-full h-full object-cover rounded-lg -z-10' />
       }
 
     </div>

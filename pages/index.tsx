@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { BannerProps, CategoryCards, getBannerProps, HomeHeroBanner, InfoBannerCard, YX1BannerCard, ZX7BannerCard, ZX9BannerCard } from '../components';
 import { Categories, client, formatCategories } from '../lib';
 import { useStateContext } from '../context/ContextWrap';
 import common from '../components/common.module.scss';
+import { useMediaQuery } from 'react-responsive';
+import { ScreenSize } from './_app';
 
 export interface CommonPageProps {
   categories: Categories[],
@@ -17,9 +19,19 @@ interface HomeProps extends CommonPageProps {
   InfoData: BannerProps,
 }
 
-//TODO: Media query at page level
 const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: HomeProps) => {
   const { resetCart, setResetCart, removeAllCart, storeLink } = useStateContext();
+
+  const [loaded, setLoaded] = useState(false);
+  const isDesktop = useMediaQuery({ minWidth: 1024 })
+  const isLargeTablet = useMediaQuery({ minWidth: 576 })
+  const isTablet = useMediaQuery({ minWidth: 376 })
+  const screenSizeA = (isDesktop ? ScreenSize.DESKTOP : isLargeTablet ? ScreenSize.TABLET : ScreenSize.MOBILE);
+  const screenSizeB = (isDesktop ? ScreenSize.DESKTOP : isTablet ? ScreenSize.TABLET : ScreenSize.MOBILE);
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
 
   useEffect(() => {
     storeLink('/', true)
@@ -33,12 +45,12 @@ const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: H
   return (
     <div className={common.appWrap}>
       <hr className={`$border-white opacity-20`} />
-      <HomeHeroBanner data={XX99IIData.data} />
+      <HomeHeroBanner data={XX99IIData.data} screenSize={screenSizeB} loaded={loaded} />
       <CategoryCards categories={categories} className='mt-28' />
-      <ZX9BannerCard className='mt-[120px] xs:mt-24 lg:mt-[168px]' data={ZX9Data.data} />
-      <ZX7BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={ZX7Data.data} />
-      <YX1BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={YX1Data.data} />
-      <InfoBannerCard className='my-[120px] xs:my-24 lg:my-[200px]' data={InfoData.data} />
+      <ZX9BannerCard className='mt-[120px] xs:mt-24 lg:mt-[168px]' data={ZX9Data.data} screenSize={screenSizeA} loaded={loaded} />
+      <ZX7BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={ZX7Data.data} screenSize={screenSizeA} loaded={loaded} />
+      <YX1BannerCard className='mt-6 xs:mt-8 lg:mt-12' data={YX1Data.data} screenSize={screenSizeB} loaded={loaded}/>
+      <InfoBannerCard className='my-[120px] xs:my-24 lg:my-[200px]' data={InfoData.data} screenSize={screenSizeB} loaded={loaded} />
     </div>
   )
 }

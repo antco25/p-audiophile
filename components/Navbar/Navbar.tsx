@@ -17,7 +17,6 @@ const Navbar = ({ categories, background }: NavbarProps) => {
   const { cartItems, setShowCart, showMenu, setShowMenu, showCart } = useStateContext();
   const [loaded, setLoaded] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 576 })
 
   useEffect(() => {
     setLoaded(true)
