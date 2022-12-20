@@ -11,3 +11,4 @@ export { default as QuantityCounter } from './QuantityCounter';
 export { default as RecommendCard } from './RecommendCard';
 export { default as CartModal } from './CartModal';
 export { default as PurchasedModal } from './PurchasedModal';
+export { default as FormField } from './FormField';

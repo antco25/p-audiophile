@@ -12,7 +12,7 @@ const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerPageProps)
   const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
-    <Link className={`${props.className ? props.className + ' ' : ''}text-white group flex h-[509px] xs:h-[638px] lg:h-[632px]`}
+    <Link className={`${props.className ? props.className + ' ' : ''}text-white flex h-[509px] xs:h-[638px] lg:h-[632px]`}
       href={`/products/${data.productSlug}`}>
       <div className='flex-1'>
         <div className={`flex flex-col h-full justify-center items-center lg:items-start 
@@ -24,11 +24,11 @@ const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerPageProps)
         </div>
       </div>
       <div className='flex-0 lg:flex-1'>
-        <div className='absolute left-1/2 -translate-x-2/4 top-0 w-full -z-10 overflow-hidden'>
+        <div className='absolute left-1/2 -translate-x-2/4 top-0 w-full -z-10'>
           {
             loaded &&
             <img src={image}
-              alt='Product Banner' className='object-cover h-[600px] xs:h-[729px] mx-auto group-hover:scale-102 transition-transform' />
+              alt='Product Banner' className='object-cover h-[600px] xs:h-[729px] mx-auto' />
           }
         </div>
         <div className='absolute bg-[#191919] w-full left-0 top-0 h-[600px] xs:h-[729px] -z-20' />

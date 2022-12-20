@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { client, formatCategories } from '../../lib';
 import { useStateContext } from '../../context/ContextWrap';
-import { PurchasedModal } from '../../components';
+import { FormField, PurchasedModal } from '../../components';
 import { CashOn } from '../../components/Icons';
-import FormField from './FormField';
 import styles from './index.module.scss';
 import common from '../../components/common.module.scss';
 
