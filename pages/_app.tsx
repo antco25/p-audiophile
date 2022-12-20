@@ -12,6 +12,3 @@ export default function App({ Component, pageProps }: AppProps) {
     </ContextWrap>
   )
 }
-
-//TODO: 
-//Error handling ie wrong route -> categories/fake

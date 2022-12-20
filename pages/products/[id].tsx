@@ -85,26 +85,35 @@ const ProductDetail = ({ categories, product, recommendations, InfoData }: Produ
 export default ProductDetail
 
 export const getServerSideProps: GetServerSideProps<ProductDetailProps> = async (context) => {
-  const categoryQuery = `*[_type == "category"] | order(order)`;
-  const categories = formatCategories(await client.fetch(categoryQuery));
+  try {
+    const categoryQuery = `*[_type == "category"] | order(order)`;
+    const categories = formatCategories(await client.fetch(categoryQuery));
 
-  const urlProduct = context.params?.id as string || '';
-  const productQuery = `*[_type == "product" && slug.current == "${urlProduct}"][0] { ..., category->{name, _id} }`;
-  const productResult = await client.fetch(productQuery)
-  const product = formatProduct(productResult);
+    const urlProduct = context.params?.id as string || '';
+    const productQuery = `*[_type == "product" && slug.current == "${urlProduct}"][0] { ..., category->{name, _id} }`;
+    const productResult = await client.fetch(productQuery)
+    const product = formatProduct(productResult);
 
-  const recommendationQueryOne = `*[_type == "product" && category._ref =="${productResult.category._id}" && slug.current != "${urlProduct}"][0..1] | 
-                                { name, slug, recommendImage }`;
-  const recommendationQueryTwo = `*[_type == "product" && category._ref !="${productResult.category._id}" && slug.current != "${urlProduct}"][0..2] | 
-                                { name, slug, recommendImage }`;
-  const recommendations = formatRecommendations([...await client.fetch(recommendationQueryOne), ...await client.fetch(recommendationQueryTwo)].slice(0, 3));
+    const recommendationQueryOne = `*[_type == "product" && category._ref =="${productResult.category._id}" && slug.current != "${urlProduct}"][0..1] | 
+                                  { name, slug, recommendImage }`;
+    const recommendationQueryTwo = `*[_type == "product" && category._ref !="${productResult.category._id}" && slug.current != "${urlProduct}"][0..2] | 
+                                  { name, slug, recommendImage }`;
+    const recommendations = formatRecommendations([...await client.fetch(recommendationQueryOne), ...await client.fetch(recommendationQueryTwo)].slice(0, 3));
 
-  const infoQuery = `*[_type == "banner" && name == "Info"][0] | { ..., product->{slug} }`;
-  const InfoData = getBannerProps(await client.fetch(infoQuery))
+    const infoQuery = `*[_type == "banner" && name == "Info"][0] | { ..., product->{slug} }`;
+    const InfoData = getBannerProps(await client.fetch(infoQuery))
 
-  const currentRoute = product.name
+    const currentRoute = product.name
 
-  return {
-    props: { categories, product, recommendations, InfoData, currentRoute }
+    return {
+      props: { categories, product, recommendations, InfoData, currentRoute }
+    }
+  } catch (e) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
   }
 }

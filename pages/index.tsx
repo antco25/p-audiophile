@@ -45,22 +45,31 @@ const Home = ({ categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData }: H
 export default Home
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const categoryQuery = `*[_type == "category"] | order(order)`;
-  const categories = formatCategories(await client.fetch(categoryQuery));
+  try {
+    const categoryQuery = `*[_type == "category"] | order(order)`;
+    const categories = formatCategories(await client.fetch(categoryQuery));
 
-  const query = `*[_type == "banner"] | order(name) { ..., product->{slug} }`;
-  const results = await client.fetch(query);
+    const query = `*[_type == "banner"] | order(name) { ..., product->{slug} }`;
+    const results = await client.fetch(query);
 
-  const InfoData = getBannerProps(results[0])
-  const XX99IIData = getBannerProps(results[1])
-  const YX1Data = getBannerProps(results[2])
-  const ZX7Data = getBannerProps(results[3])
-  const ZX9Data = getBannerProps(results[4])
+    const InfoData = getBannerProps(results[0])
+    const XX99IIData = getBannerProps(results[1])
+    const YX1Data = getBannerProps(results[2])
+    const ZX7Data = getBannerProps(results[3])
+    const ZX9Data = getBannerProps(results[4])
 
-  const currentRoute = '/'
+    const currentRoute = '/'
 
-  return {
-    props: { categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData, currentRoute }
+    return {
+      props: { categories, XX99IIData, ZX9Data, ZX7Data, YX1Data, InfoData, currentRoute }
+    }
+  } catch (e) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
   }
 }
 

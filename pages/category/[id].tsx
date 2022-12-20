@@ -40,22 +40,30 @@ const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: C
 
 export default CategoryDetails
 
-//TODO: Error handling
 export const getServerSideProps: GetServerSideProps<CategoryDetailProps> = async (context) => {
-  const categoryQuery = `*[_type == "category"] | order(order)`;
-  const categories = formatCategories(await client.fetch(categoryQuery));
+  try {
+    const categoryQuery = `*[_type == "category"] | order(order)`;
+    const categories = formatCategories(await client.fetch(categoryQuery));
 
-  const category = context.params?.id as string || '';
-  const urlCategory = categories.find(el => el.name.toLowerCase() === category);
-  const categoryProductsQuery = `*[_type == "product" && category._ref == "${urlCategory?.id}"] | order(name desc)`;
-  const categoryProducts = formatCategoryProducts(await client.fetch(categoryProductsQuery), urlCategory?.name.toLowerCase() || '');
+    const category = context.params?.id as string || '';
+    const urlCategory = categories.find(el => el.name.toLowerCase() === category);
+    const categoryProductsQuery = `*[_type == "product" && category._ref == "${urlCategory?.id}"] | order(name desc)`;
+    const categoryProducts = formatCategoryProducts(await client.fetch(categoryProductsQuery), urlCategory?.name.toLowerCase() || '');
 
-  const infoQuery = `*[_type == "banner" && name == "Info"][0] | { ..., product->{slug} }`;
-  const InfoData = getBannerProps(await client.fetch(infoQuery))
+    const infoQuery = `*[_type == "banner" && name == "Info"][0] | { ..., product->{slug} }`;
+    const InfoData = getBannerProps(await client.fetch(infoQuery))
 
-  const currentRoute = categoryProducts[0].category.charAt(0).toUpperCase() + categoryProducts[0].category.slice(1);
+    const currentRoute = categoryProducts[0].category.charAt(0).toUpperCase() + categoryProducts[0].category.slice(1);
 
-  return {
-    props: { category, categories, categoryProducts, InfoData, currentRoute }
+    return {
+      props: { category, categories, categoryProducts, InfoData, currentRoute }
+    }
+  } catch (e) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
   }
 }

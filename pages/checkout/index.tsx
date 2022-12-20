@@ -194,12 +194,21 @@ const Checkout = () => {
 export default Checkout
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const categoryQuery = `*[_type == "category"] | order(order)`;
-  const categories = formatCategories(await client.fetch(categoryQuery));
+  try {
+    const categoryQuery = `*[_type == "category"] | order(order)`;
+    const categories = formatCategories(await client.fetch(categoryQuery));
 
-  const currentRoute = 'Checkout'
+    const currentRoute = 'Checkout'
 
-  return {
-    props: { categories, currentRoute }
+    return {
+      props: { categories, currentRoute }
+    }
+  } catch (e) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
   }
 }
