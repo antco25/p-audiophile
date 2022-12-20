@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/ContextWrap';
-import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 import QuantityCounter from '../QuantityCounter';
 
@@ -15,11 +14,10 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
         cartImage: string,
         id: string,
         slug: string,
-    },
-    screenSize: ScreenSize
+    }
 }
 
-const ProductCard = ({ data, screenSize, ...props }: ProductCardProps) => {
+const ProductCard = ({ data, ...props }: ProductCardProps) => {
     const { setShowCart, addToCart } = useStateContext();
     const [quantity, setQuantity] = useState(1);
 
@@ -49,8 +47,12 @@ const ProductCard = ({ data, screenSize, ...props }: ProductCardProps) => {
     return (
         <div className={`${props.className ? props.className + ' ' : ''}flex flex-col xsm:flex-row gap-8 xsm:gap-6 lg:gap-[30px]`}>
             <div className='flex-1'>
-                <img src={data.image[screenSize]} alt='Product image' 
-                className='rounded-lg object-cover w-full pr-0 min-[680px]:pr-11 min-[800px]:pr-0 h-[327px] xsm:h-[480px] lg:h-[560px]' />
+                <img src={data.image[0]} alt='Product image'
+                    className='rounded-lg object-cover w-full pr-0 min-[680px]:pr-11 min-[800px]:pr-0 h-[327px] xsm:h-[480px] lg:h-[560px] hidden lg:block' />
+                <img src={data.image[1]} alt='Product image'
+                    className='rounded-lg object-cover w-full pr-0 min-[680px]:pr-11 min-[800px]:pr-0 h-[327px] xsm:h-[480px] lg:h-[560px] hidden xsm:block lg:hidden' />
+                <img src={data.image[2]} alt='Product image'
+                    className='rounded-lg object-cover w-full pr-0 min-[680px]:pr-11 min-[800px]:pr-0 h-[327px] xsm:h-[480px] lg:h-[560px] block xsm:hidden' />
             </div>
             <div className='flex-1'>
                 <div className='flex flex-col justify-center items-start xsm:w-[300px] sm:w-[340px] lg:w-[446px] ml-auto h-full'>

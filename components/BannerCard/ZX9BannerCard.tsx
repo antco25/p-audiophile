@@ -2,14 +2,12 @@ import React from 'react'
 import Link from 'next/link';
 import { PatternCircles } from '../Icons';
 import { getRichText } from '../../lib';
-import { BannerPageProps } from './BannerProps';
-import { ScreenSize } from '../../pages/_app';
+import BannerProps from './BannerProps';
 import common from '../common.module.scss';
 
-const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) => {
+const ZX9BannerCard = ({ data, ...props }: BannerProps) => {
   const header = getRichText(data.header);
   const description = getRichText(data.description);
-  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <Link href={`/products/${data.productSlug}`} className={`${props.className ? props.className + ' ' : ''}block group text-white h-[600px] xsm:h-[720px] lg:h-[560px]`}>
@@ -18,13 +16,15 @@ const ZX9BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) 
           <PatternCircles
             className={`absolute -top-[121px] xsm:-top-[288px] lg:-top-[36px] right-2/4 lg:-right-[240px] translate-x-2/4 lg:translate-x-0 
             w-[558px] xsm:w-[944px] h-[558px] xsm:h-[944px]`} />
-          {
-            loaded &&
-            <img src={image}
-              alt='Product Banner'
-              className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
-                w-[170px] xsm:w-[200px] lg:w-[23rem] group-hover:scale-102 transition-transform`} />
-          }
+          <img src={data.imageDesktop} alt='Product Banner'
+            className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
+                w-[170px] xsm:w-[200px] lg:w-[23rem] group-hover:scale-102 transition-transform hidden lg:block`} />
+          <img src={data.imageTablet} alt='Product Banner'
+            className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
+                w-[170px] xsm:w-[200px] lg:w-[23rem] group-hover:scale-102 transition-transform hidden xsm:block lg:hidden`} />
+          <img src={data.imageMobile} alt='Product Banner'
+            className={`absolute top-[55px] xs:top-[52px] lg:top-auto lg:-bottom-2 right-2/4 lg:right-11 translate-x-2/4 lg:translate-x-0 
+                w-[170px] xsm:w-[200px] lg:w-[23rem] group-hover:scale-102 transition-transform block xsm:hidden`} />
         </div>
         <div className='flex-1'>
           <div className={`relative h-full flex flex-col justify-end xs:justify-center z-10 items-center lg:items-start lg:ml-28 text-center lg:text-left 

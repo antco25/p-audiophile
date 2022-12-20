@@ -1,14 +1,13 @@
 import React from 'react'
 import { getRichText } from '../../lib';
-import { BannerPageProps } from './BannerProps';
+import BannerProps from './BannerProps';
 import common from '../common.module.scss';
-import { ScreenSize } from '../../pages/_app';
 
-const InfoBannerCard = ({ data, loaded, screenSize, ...props }: BannerPageProps) => {
+
+const InfoBannerCard = ({ data, ...props }: BannerProps) => {
 
   const header = getRichText(data.header, 'text-pOrange-200');
   const description = getRichText(data.description);
-  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <div className={`${props.className ? props.className + ' ' : ''}
@@ -17,12 +16,10 @@ const InfoBannerCard = ({ data, loaded, screenSize, ...props }: BannerPageProps)
         <h1 className={`${common.headerOne} lg:max-w-[445px] xsm:max-w-[573px] xs:max-w-[345px] mb-8`}>{header}</h1>
         <p className='text-base opacity-50 lg:max-w-[445px] sm:max-w-[573px] '>{description}</p>
       </div>
-      <div className='lg:flex-1 lg:order-2 h-[300px] lg:h-[588px] '>
-        {
-          loaded &&
-          <img src={image}
-            alt='Product Banner' className='block w-full h-full object-cover rounded-lg' />
-        }
+      <div className='lg:flex-1 w-full lg:w-auto lg:order-2 h-[300px] lg:h-[588px] '>
+        <img src={data.imageDesktop} alt='Product Banner' className='w-full h-full object-cover rounded-lg hidden lg:block' />
+        <img src={data.imageTablet} alt='Product Banner' className='w-full h-full object-cover rounded-lg hidden xs:block lg:hidden' />
+        <img src={data.imageMobile} alt='Product Banner' className='w-full h-full object-cover rounded-lg block xs:hidden' />
       </div>
     </div>
   )

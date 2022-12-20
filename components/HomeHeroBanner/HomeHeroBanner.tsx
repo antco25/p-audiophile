@@ -1,15 +1,13 @@
 import Link from 'next/link';
 import React from 'react'
 import { getRichText } from '../../lib';
-import { ScreenSize } from '../../pages/_app';
-import { BannerPageProps } from '../BannerCard/BannerProps';
+import BannerProps from '../BannerCard/BannerProps';
 import common from '../common.module.scss';
 
-const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerPageProps) => {
+const HomeHeroBanner = ({ data, ...props }: BannerProps) => {
 
   const header = getRichText(data.header);
   const description = getRichText(data.description);
-  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <Link className={`${props.className ? props.className + ' ' : ''}text-white flex h-[509px] xs:h-[638px] lg:h-[632px]`}
@@ -25,11 +23,9 @@ const HomeHeroBanner = ({ data, screenSize, loaded, ...props }: BannerPageProps)
       </div>
       <div className='flex-0 lg:flex-1'>
         <div className='absolute left-1/2 -translate-x-2/4 top-0 w-full -z-10'>
-          {
-            loaded &&
-            <img src={image}
-              alt='Product Banner' className='object-cover h-[600px] xs:h-[729px] mx-auto' />
-          }
+          <img src={data.imageDesktop} alt='Product Banner' className='object-cover h-[600px] xs:h-[729px] mx-auto hidden lg:block' />
+          <img src={data.imageTablet} alt='Product Banner' className='object-cover h-[600px] xs:h-[729px] mx-auto hidden xs:block lg:hidden' />
+          <img src={data.imageMobile} alt='Product Banner' className='object-cover h-[600px] xs:h-[729px] mx-auto block xs:hidden' />
         </div>
         <div className='absolute bg-[#191919] w-full left-0 top-0 h-[600px] xs:h-[729px] -z-20' />
       </div>

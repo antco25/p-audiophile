@@ -13,8 +13,5 @@ export default function App({ Component, pageProps }: AppProps) {
   )
 }
 
-export enum ScreenSize {
-  'DESKTOP',
-  'TABLET',
-  'MOBILE'
-}
+//TODO: 
+//Error handling ie wrong route -> categories/fake

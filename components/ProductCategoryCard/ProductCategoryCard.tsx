@@ -1,27 +1,25 @@
 import Link from 'next/link';
 import React from 'react';
 import { CategoryProduct } from '../../lib';
-import { ScreenSize } from '../../pages/_app';
 import common from '../common.module.scss';
 
 interface ProductCategoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
     data: CategoryProduct,
     reverse?: boolean,
-    loaded: boolean,
-    screenSize: ScreenSize
 }
 
-const ProductCategoryCard = ({ data, reverse, loaded, screenSize, ...props }: ProductCategoryCardProps) => {
+const ProductCategoryCard = ({ data, reverse, ...props }: ProductCategoryCardProps) => {
 
     return (
         <Link className={`${props.className ? props.className + ' ' : ''}group flex flex-col lg:flex-row gap-[32px] xsm:gap-[52px] lg:gap-[30px]`}
             href={`/products/${data.slug}`} >
             <div className={`${reverse ? 'lg:order-1 ' : ''}lg:flex-1 rounded-lg h-[352px] lg:h-[560px] overflow-hidden`}>
-                {
-                    loaded &&
-                    <img src={data.categoryImage[screenSize]}
-                        alt='Product image' className='h-full w-full object-cover mx-auto group-hover:scale-105 transition-transform' />
-                }
+                <img src={data.categoryImage[0]}
+                    alt='Product image' className='h-full w-full object-cover mx-auto group-hover:scale-105 transition-transform hidden lg:block' />
+                <img src={data.categoryImage[1]}
+                    alt='Product image' className='h-full w-full object-cover mx-auto group-hover:scale-105 transition-transform hidden xs:block lg:hidden' />
+                <img src={data.categoryImage[2]}
+                    alt='Product image' className='h-full w-full object-cover mx-auto group-hover:scale-105 transition-transform block xs:hidden' />
             </div>
             <div className='flex-1'>
                 <div className={`flex flex-col justify-center items-center lg:items-start text-center lg:text-left h-full 

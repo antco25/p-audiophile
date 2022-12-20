@@ -1,5 +1,4 @@
 import { urlFor } from "../../lib/sanityClient";
-import { ScreenSize } from "../../pages/_app";
 
 export default interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   data: {
@@ -10,11 +9,6 @@ export default interface BannerProps extends React.HTMLAttributes<HTMLDivElement
     imageTablet: string,
     imageMobile: string,
   }
-}
-
-export interface BannerPageProps extends BannerProps {
-  screenSize: ScreenSize,
-  loaded: boolean
 }
 
 export const getBannerProps = (data: {

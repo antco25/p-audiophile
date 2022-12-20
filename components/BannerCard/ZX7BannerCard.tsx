@@ -1,13 +1,11 @@
 import Link from 'next/link';
 import React from 'react'
 import { getRichText } from '../../lib';
-import { BannerPageProps } from './BannerProps';
-import { ScreenSize } from '../../pages/_app';
+import BannerProps from './BannerProps';
 import common from '../common.module.scss';
 
-const ZX7BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) => {
+const ZX7BannerCard = ({ data, ...props }: BannerProps) => {
   const header = getRichText(data.header);
-  const image = screenSize === ScreenSize.DESKTOP ? data.imageDesktop : screenSize === ScreenSize.TABLET ? data.imageTablet : data.imageMobile
 
   return (
     <Link href={`/products/${data.productSlug}`}
@@ -17,11 +15,9 @@ const ZX7BannerCard = ({ data, screenSize, loaded, ...props }: BannerPageProps) 
         <button className={`${common.buttonLinkTwo}`}>See Product</button>
       </div>
       <div className='absolute top-0 block w-full h-full -z-10 rounded-lg overflow-hidden'>
-        {
-          loaded &&
-          <img src={image}
-            alt='Product Banner' className='object-cover w-full h-full group-hover:scale-102 transition-transform' />
-        }
+        <img src={data.imageDesktop} alt='Product Banner' className='object-cover w-full h-full group-hover:scale-102 transition-transform hidden lg:block' />
+        <img src={data.imageTablet} alt='Product Banner' className='object-cover w-full h-full group-hover:scale-102 transition-transform hidden xsm:block lg:hidden' />
+        <img src={data.imageMobile} alt='Product Banner' className='object-cover w-full h-full group-hover:scale-102 transition-transform block xsm:hidden' />
       </div>
 
     </Link>

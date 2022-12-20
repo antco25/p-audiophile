@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { GetServerSideProps } from 'next';
 import { BannerProps, CategoryCards, getBannerProps, InfoBannerCard, ProductCategoryCard } from '../../components';
 import { CategoryProduct, client, formatCategories, formatCategoryProducts } from '../../lib';
 import { CommonPageProps } from '..';
 import { useStateContext } from '../../context/ContextWrap';
-import { ScreenSize } from '../_app';
-import { useMediaQuery } from 'react-responsive';
 import common from '../../components/common.module.scss';
 
 interface CategoryDetailProps extends CommonPageProps {
@@ -16,15 +14,6 @@ interface CategoryDetailProps extends CommonPageProps {
 
 const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: CategoryDetailProps) => {
   const { storeLink } = useStateContext();
-
-  const [loaded, setLoaded] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1024 })
-  const isTablet = useMediaQuery({ minWidth: 376 })
-  const screenSize = (isDesktop ? ScreenSize.DESKTOP : isTablet ? ScreenSize.TABLET : ScreenSize.MOBILE);
-
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
 
   useEffect(() => {
     storeLink(`/category/${category}`, true)
@@ -39,12 +28,11 @@ const CategoryDetails = ({ category, categories, categoryProducts, InfoData }: C
       <div className={common.appWrap}>
         {
           categoryProducts.map((product, index) => {
-            return <ProductCategoryCard key={index} data={product} className='mb-[120px] lg:mb-[160px]' reverse={index % 2 !== 0}
-              screenSize={screenSize} loaded={loaded} />
+            return <ProductCategoryCard key={index} data={product} className='mb-[120px] lg:mb-[160px]' reverse={index % 2 !== 0} />
           })
         }
         <CategoryCards categories={categories} className='mb-[120px] lg:mb-[160px]' />
-        <InfoBannerCard className='mb-[120px] lg:mb-[160px]' data={InfoData.data} screenSize={screenSize} loaded={loaded} />
+        <InfoBannerCard className='mb-[120px] lg:mb-[160px]' data={InfoData.data} />
       </div>
     </div>
   )
