@@ -1,4 +1,4 @@
-# Frontend Mentor - Audiophile e-commerce website solution
+# Audiophile E-commerce Website
 
 This is a solution to the [Audiophile e-commerce website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/audiophile-ecommerce-website-C8cuSd_wx). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
@@ -32,7 +32,10 @@ Users should be able to:
 
 ### Screenshot
 
+Desktop Layout:
 ![](./screenshots/screenshot-d.jpg)
+
+Mobile Layout:
 ![](./screenshots/screenshot-m.jpg)
 
 ### Links
@@ -55,12 +58,12 @@ Users should be able to:
 
 ### What I learned
 
-- First time using Next.JS for a project. Learned about its server side rendering capabilities, built-in routing,
-  and using Context as an alternative to Redux for global state management. Overall positive experience with the
-  framework although handling image media queries with javascript isn't as good compared to create-react-app. 
-- First time using Tailwind CSS. Frustrating to use at first, but once you get the hang of it, it becomes
-  easy to use and preferable to regular CSS. 
-- First time using Sanity and headless CMS. Greatly simplified the backend work compared to a Express/MongoDB solution.
+- First time using Next.JS for a project. Learned about its server side rendering capabilities, getServerSideProps system,
+  built-in file routing and using Context as an alternative to Redux for global state management. Overall positive experience with the
+  framework and very happy with all the features available. Only issues encountered was poor results for client-side javascript media 
+  queries due to Next.JS being primarily SSR. 
+- First time using Tailwind CSS. Frustrating to use at first, but soon became easy to use and preferable to regular CSS. 
+- First time using Sanity and headless CMS. Greatly simplified the backend work compared to an Express/MongoDB solution.
 
 ## Author
 
