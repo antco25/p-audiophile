@@ -32,10 +32,10 @@ Users should be able to:
 
 ### Screenshot
 
-Desktop Layout:
+Desktop Layout:    
 ![](./screenshots/screenshot-d.jpg)
 
-Mobile Layout:
+Mobile Layout:    
 ![](./screenshots/screenshot-m.jpg)
 
 ### Links
